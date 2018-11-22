@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>水费</title>
+<link href="../css/index.css" rel="stylesheet" type="text/css"/>
+<script src="../js/zepto.min.js"></script>
+<script src="../js/picker.js"></script>
+<script src="../js/select.js"></script>
+<script>
+  $(function(){
+
+
+      $.post("/c1List", {}, function (data) {
+
+          $.each(data.c1list, function (idx, obj) {
+              $('#c1id').append("<option value='" + obj.c1id + "'>" + obj.c1name + "</option>");
+          })
+      }, 'json')
+
+	$("#d1").select({
+        title: "请选择所在城市",
+        autoClose : true,
+
+
+
+        items: ['长沙市','常德市','常德市常德市市','xx市','xx市','xx市','xx市'],
+        onChange: function(d) {
+         //$.alert("你选择了"+d.values);
+        }
+      });
+
+	$("#d2").select({
+        title: "请选择缴费单位",
+        autoClose:true,
+
+        items: ['长沙市自来水公司','单位2','单位3'],
+        onChange: function(d) {
+         //$.alert("你选择了"+d.values);
+        }
+      });
+
+	  });
+  function tianjia(obj){
+      var xianshi= $('#jiaofei').val();
+      var hao = $(obj).text();
+      $('#jiaofei').val(xianshi+hao);
+  }
+  function qingchu(obj){
+      var xianshi= $('#jiaofei').val();
+//      xianshi.length-1
+      var hao = xianshi.substring(0,xianshi.length-1);
+      $('#jiaofei').val(hao);
+  }
+</script>
+</head>
+
+<body>
+<div class="top">
+  <div class="top-left"><a class="logo" href="../index.html"></a></div>
+  <div class="top-right"><p>2018-09-10 11:26:22</p></div>
+</div>
+<div class="box2">
+  <div class="little-time">
+    <h4>03:16</h4>
+    <h5>剩余时间</h5>
+  </div>
+  <div class="title">
+    <h4>水费</h4>
+  </div>
+  <div class="box5">
+    <div class="tel-left">
+      <div class="search-result">
+        <div class="result">
+            <div class="result-label"><label>城市</label></div>
+            <div class="result-txt"><input class="weui_input" type="text" placeholder="请选择所在城市" value="长沙市" id='d1' /></div>
+        </div><!--/.result-->
+        <div class="result">
+            <div class="result-label"><label>缴费单位</label></div>
+            <div class="result-txt"><input class="weui_input" type="text" placeholder="请选择缴费单位" value="长沙市自来水公司" id='d2' /></div>
+        </div><!--/.result-->
+        <div class="result">
+            <div class="result-label"><label>客户号</label></div>
+            <div class="result-txt"><input class="weui_input" id="jiaofei" type="text" placeholder="请填写您的缴费户号" value="" /></div>
+        </div><!--/.result-->
+        <div class="sure"><a href="01-2.html">查询</a></div>
+      </div>
+    </div>
+    <div class="tel-right">
+      <ul class="tel-num">
+        <c:forEach items="${c1 }" var="c1">
+          <option value="${c1.c1id }"
+          <c:if test="${car.c1id==c1.c1id }"> selected="selected" </c:if>>${c1.c1name}</option>
+        </c:forEach>
+        <li><a href="javascript:;" onclick="tianjia(this);">1</a></li>
+        <li><a href="javascript:;" onclick="tianjia(this);">2</a></li>
+        <li><a href="javascript:;" onclick="tianjia(this);">3</a></li>
+        <li><a href="javascript:;" onclick="tianjia(this);">4</a></li>
+        <li><a href="javascript:;" onclick="tianjia(this);">5</a></li>
+        <li><a href="javascript:;" onclick="tianjia(this);">6</a></li>
+        <li><a href="javascript:;" onclick="tianjia(this);">7</a></li>
+        <li><a href="javascript:;" onclick="tianjia(this);">8</a></li>
+        <li><a href="javascript:;" onclick="tianjia(this);">9</a></li>
+        <li><a href="javascript:;" onclick="tianjia(this);">.</a></li>
+        <li><a href="javascript:;" onclick="tianjia(this);">0</a></li>
+        <li><a href="javascript:;" onclick="qingchu(this);">清除</a></li>
+      </ul>
+    </div>
+    <div class="clear"></div>
+  </div>
+
+</div>
+<div class="box3"><a class="goback" href="../index.html">首页</a></div>
+</body>
+</html>

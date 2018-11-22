@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.owinfo.sql.dao.YmWmsWhStockDtlMapper" >
+  <resultMap id="BaseResultMap" type="com.owinfo.sql.bean.YmWmsWhStockDtl" >
+    <id column="rid" property="rid" jdbcType="BIGINT" />
+    <result column="dn" property="dn" jdbcType="VARCHAR" />
+    <result column="warehousecode" property="warehousecode" jdbcType="VARCHAR" />
+    <result column="is_qualit" property="isQualit" jdbcType="VARCHAR" />
+    <result column="stockpositioncode" property="stockpositioncode" jdbcType="VARCHAR" />
+    <result column="g_name" property="gName" jdbcType="VARCHAR" />
+    <result column="g_model" property="gModel" jdbcType="VARCHAR" />
+    <result column="sn" property="sn" jdbcType="VARCHAR" />
+    <result column="g_qty" property="gQty" jdbcType="INTEGER" />
+    <result column="g_unit" property="gUnit" jdbcType="INTEGER" />
+    <result column="company_no" property="companyNo" jdbcType="VARCHAR" />
+    <result column="pn" property="pn" jdbcType="VARCHAR" />
+    <result column="product_date" property="productDate" jdbcType="TIMESTAMP" />
+    <result column="invalid_date" property="invalidDate" jdbcType="TIMESTAMP" />
+    <result column="safe_date" property="safeDate" jdbcType="INTEGER" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+    <result column="extend1" property="extend1" jdbcType="VARCHAR" />
+    <result column="extend2" property="extend2" jdbcType="VARCHAR" />
+    <result column="extend3" property="extend3" jdbcType="VARCHAR" />
+    <result column="extend4" property="extend4" jdbcType="VARCHAR" />
+    <result column="extend5" property="extend5" jdbcType="VARCHAR" />
+    <result column="category_id" property="categoryId" jdbcType="INTEGER" />
+    <result column="purchase_no" property="purchaseNo" jdbcType="VARCHAR" />
+    <result column="dn_external" property="dnExternal" jdbcType="VARCHAR" />
+    <result column="is_usable" property="isUsable" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    rid, dn, warehousecode, is_qualit, stockpositioncode, g_name, g_model, sn, g_qty, 
+    g_unit, company_no, pn, product_date, invalid_date, safe_date, gmt_create, gmt_modified, 
+    extend1, extend2, extend3, extend4, extend5, category_id, purchase_no, dn_external, 
+    is_usable
+  </sql>
+
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from ym_wms.ym_wms_wh_stock_dtl
+  </select>
+
+  <!--<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >-->
+    <!--select -->
+    <!--<include refid="Base_Column_List" />-->
+    <!--from ym_wms.ym_wms_wh_stock_dtl-->
+    <!--where rid = #{rid,jdbcType=BIGINT}-->
+  <!--</select>-->
+  <!--<delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >-->
+    <!--delete from ym_wms_wh_stock_dtl-->
+    <!--where rid = #{rid,jdbcType=BIGINT}-->
+  <!--</delete>-->
+  <!--<insert id="insert" parameterType="com.owinfo.sql.bean.YmWmsWhStockDtl" >-->
+    <!--insert into ym_wms_wh_stock_dtl (rid, dn, warehousecode, -->
+      <!--is_qualit, stockpositioncode, g_name, -->
+      <!--g_model, sn, g_qty, g_unit, -->
+      <!--company_no, pn, product_date, -->
+      <!--invalid_date, safe_date, gmt_create, -->
+      <!--gmt_modified, extend1, extend2, -->
+      <!--extend3, extend4, extend5, -->
+      <!--category_id, purchase_no, dn_external, -->
+      <!--is_usable)-->
+    <!--values (#{rid,jdbcType=BIGINT}, #{dn,jdbcType=VARCHAR}, #{warehousecode,jdbcType=VARCHAR}, -->
+      <!--#{isQualit,jdbcType=VARCHAR}, #{stockpositioncode,jdbcType=VARCHAR}, #{gName,jdbcType=VARCHAR}, -->
+      <!--#{gModel,jdbcType=VARCHAR}, #{sn,jdbcType=VARCHAR}, #{gQty,jdbcType=INTEGER}, #{gUnit,jdbcType=INTEGER}, -->
+      <!--#{companyNo,jdbcType=VARCHAR}, #{pn,jdbcType=VARCHAR}, #{productDate,jdbcType=TIMESTAMP}, -->
+      <!--#{invalidDate,jdbcType=TIMESTAMP}, #{safeDate,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, -->
+      <!--#{gmtModified,jdbcType=TIMESTAMP}, #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, -->
+      <!--#{extend3,jdbcType=VARCHAR}, #{extend4,jdbcType=VARCHAR}, #{extend5,jdbcType=VARCHAR}, -->
+      <!--#{categoryId,jdbcType=INTEGER}, #{purchaseNo,jdbcType=VARCHAR}, #{dnExternal,jdbcType=VARCHAR}, -->
+      <!--#{isUsable,jdbcType=VARCHAR})-->
+  <!--</insert>-->
+  <!--<insert id="insertSelective" parameterType="com.owinfo.sql.bean.YmWmsWhStockDtl" >-->
+    <!--insert into ym_wms_wh_stock_dtl-->
+    <!--<trim prefix="(" suffix=")" suffixOverrides="," >-->
+      <!--<if test="rid != null" >-->
+        <!--rid,-->
+      <!--</if>-->
+      <!--<if test="dn != null" >-->
+        <!--dn,-->
+      <!--</if>-->
+      <!--<if test="warehousecode != null" >-->
+        <!--warehousecode,-->
+      <!--</if>-->
+      <!--<if test="isQualit != null" >-->
+        <!--is_qualit,-->
+      <!--</if>-->
+      <!--<if test="stockpositioncode != null" >-->
+        <!--stockpositioncode,-->
+      <!--</if>-->
+      <!--<if test="gName != null" >-->
+        <!--g_name,-->
+      <!--</if>-->
+      <!--<if test="gModel != null" >-->
+        <!--g_model,-->
+      <!--</if>-->
+      <!--<if test="sn != null" >-->
+        <!--sn,-->
+      <!--</if>-->
+      <!--<if test="gQty != null" >-->
+        <!--g_qty,-->
+      <!--</if>-->
+      <!--<if test="gUnit != null" >-->
+        <!--g_unit,-->
+      <!--</if>-->
+      <!--<if test="companyNo != null" >-->
+        <!--company_no,-->
+      <!--</if>-->
+      <!--<if test="pn != null" >-->
+        <!--pn,-->
+      <!--</if>-->
+      <!--<if test="productDate != null" >-->
+        <!--product_date,-->
+      <!--</if>-->
+      <!--<if test="invalidDate != null" >-->
+        <!--invalid_date,-->
+      <!--</if>-->
+      <!--<if test="safeDate != null" >-->
+        <!--safe_date,-->
+      <!--</if>-->
+      <!--<if test="gmtCreate != null" >-->
+        <!--gmt_create,-->
+      <!--</if>-->
+      <!--<if test="gmtModified != null" >-->
+        <!--gmt_modified,-->
+      <!--</if>-->
+      <!--<if test="extend1 != null" >-->
+        <!--extend1,-->
+      <!--</if>-->
+      <!--<if test="extend2 != null" >-->
+        <!--extend2,-->
+      <!--</if>-->
+      <!--<if test="extend3 != null" >-->
+        <!--extend3,-->
+      <!--</if>-->
+      <!--<if test="extend4 != null" >-->
+        <!--extend4,-->
+      <!--</if>-->
+      <!--<if test="extend5 != null" >-->
+        <!--extend5,-->
+      <!--</if>-->
+      <!--<if test="categoryId != null" >-->
+        <!--category_id,-->
+      <!--</if>-->
+      <!--<if test="purchaseNo != null" >-->
+        <!--purchase_no,-->
+      <!--</if>-->
+      <!--<if test="dnExternal != null" >-->
+        <!--dn_external,-->
+      <!--</if>-->
+      <!--<if test="isUsable != null" >-->
+        <!--is_usable,-->
+      <!--</if>-->
+    <!--</trim>-->
+    <!--<trim prefix="values (" suffix=")" suffixOverrides="," >-->
+      <!--<if test="rid != null" >-->
+        <!--#{rid,jdbcType=BIGINT},-->
+      <!--</if>-->
+      <!--<if test="dn != null" >-->
+        <!--#{dn,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="warehousecode != null" >-->
+        <!--#{warehousecode,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="isQualit != null" >-->
+        <!--#{isQualit,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="stockpositioncode != null" >-->
+        <!--#{stockpositioncode,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="gName != null" >-->
+        <!--#{gName,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="gModel != null" >-->
+        <!--#{gModel,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="sn != null" >-->
+        <!--#{sn,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="gQty != null" >-->
+        <!--#{gQty,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="gUnit != null" >-->
+        <!--#{gUnit,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="companyNo != null" >-->
+        <!--#{companyNo,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="pn != null" >-->
+        <!--#{pn,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="productDate != null" >-->
+        <!--#{productDate,jdbcType=TIMESTAMP},-->
+      <!--</if>-->
+      <!--<if test="invalidDate != null" >-->
+        <!--#{invalidDate,jdbcType=TIMESTAMP},-->
+      <!--</if>-->
+      <!--<if test="safeDate != null" >-->
+        <!--#{safeDate,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="gmtCreate != null" >-->
+        <!--#{gmtCreate,jdbcType=TIMESTAMP},-->
+      <!--</if>-->
+      <!--<if test="gmtModified != null" >-->
+        <!--#{gmtModified,jdbcType=TIMESTAMP},-->
+      <!--</if>-->
+      <!--<if test="extend1 != null" >-->
+        <!--#{extend1,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="extend2 != null" >-->
+        <!--#{extend2,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="extend3 != null" >-->
+        <!--#{extend3,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="extend4 != null" >-->
+        <!--#{extend4,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="extend5 != null" >-->
+        <!--#{extend5,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="categoryId != null" >-->
+        <!--#{categoryId,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="purchaseNo != null" >-->
+        <!--#{purchaseNo,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="dnExternal != null" >-->
+        <!--#{dnExternal,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="isUsable != null" >-->
+        <!--#{isUsable,jdbcType=VARCHAR},-->
+      <!--</if>-->
+    <!--</trim>-->
+  <!--</insert>-->
+  <!--<update id="updateByPrimaryKeySelective" parameterType="com.owinfo.sql.bean.YmWmsWhStockDtl" >-->
+    <!--update ym_wms_wh_stock_dtl-->
+    <!--<set >-->
+      <!--<if test="dn != null" >-->
+        <!--dn = #{dn,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="warehousecode != null" >-->
+        <!--warehousecode = #{warehousecode,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="isQualit != null" >-->
+        <!--is_qualit = #{isQualit,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="stockpositioncode != null" >-->
+        <!--stockpositioncode = #{stockpositioncode,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="gName != null" >-->
+        <!--g_name = #{gName,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="gModel != null" >-->
+        <!--g_model = #{gModel,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="sn != null" >-->
+        <!--sn = #{sn,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="gQty != null" >-->
+        <!--g_qty = #{gQty,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="gUnit != null" >-->
+        <!--g_unit = #{gUnit,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="companyNo != null" >-->
+        <!--company_no = #{companyNo,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="pn != null" >-->
+        <!--pn = #{pn,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="productDate != null" >-->
+        <!--product_date = #{productDate,jdbcType=TIMESTAMP},-->
+      <!--</if>-->
+      <!--<if test="invalidDate != null" >-->
+        <!--invalid_date = #{invalidDate,jdbcType=TIMESTAMP},-->
+      <!--</if>-->
+      <!--<if test="safeDate != null" >-->
+        <!--safe_date = #{safeDate,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="gmtCreate != null" >-->
+        <!--gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},-->
+      <!--</if>-->
+      <!--<if test="gmtModified != null" >-->
+        <!--gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},-->
+      <!--</if>-->
+      <!--<if test="extend1 != null" >-->
+        <!--extend1 = #{extend1,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="extend2 != null" >-->
+        <!--extend2 = #{extend2,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="extend3 != null" >-->
+        <!--extend3 = #{extend3,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="extend4 != null" >-->
+        <!--extend4 = #{extend4,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="extend5 != null" >-->
+        <!--extend5 = #{extend5,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="categoryId != null" >-->
+        <!--category_id = #{categoryId,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="purchaseNo != null" >-->
+        <!--purchase_no = #{purchaseNo,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="dnExternal != null" >-->
+        <!--dn_external = #{dnExternal,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="isUsable != null" >-->
+        <!--is_usable = #{isUsable,jdbcType=VARCHAR},-->
+      <!--</if>-->
+    <!--</set>-->
+    <!--where rid = #{rid,jdbcType=BIGINT}-->
+  <!--</update>-->
+  <!--<update id="updateByPrimaryKey" parameterType="com.owinfo.sql.bean.YmWmsWhStockDtl" >-->
+    <!--update ym_wms_wh_stock_dtl-->
+    <!--set dn = #{dn,jdbcType=VARCHAR},-->
+      <!--warehousecode = #{warehousecode,jdbcType=VARCHAR},-->
+      <!--is_qualit = #{isQualit,jdbcType=VARCHAR},-->
+      <!--stockpositioncode = #{stockpositioncode,jdbcType=VARCHAR},-->
+      <!--g_name = #{gName,jdbcType=VARCHAR},-->
+      <!--g_model = #{gModel,jdbcType=VARCHAR},-->
+      <!--sn = #{sn,jdbcType=VARCHAR},-->
+      <!--g_qty = #{gQty,jdbcType=INTEGER},-->
+      <!--g_unit = #{gUnit,jdbcType=INTEGER},-->
+      <!--company_no = #{companyNo,jdbcType=VARCHAR},-->
+      <!--pn = #{pn,jdbcType=VARCHAR},-->
+      <!--product_date = #{productDate,jdbcType=TIMESTAMP},-->
+      <!--invalid_date = #{invalidDate,jdbcType=TIMESTAMP},-->
+      <!--safe_date = #{safeDate,jdbcType=INTEGER},-->
+      <!--gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},-->
+      <!--gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},-->
+      <!--extend1 = #{extend1,jdbcType=VARCHAR},-->
+      <!--extend2 = #{extend2,jdbcType=VARCHAR},-->
+      <!--extend3 = #{extend3,jdbcType=VARCHAR},-->
+      <!--extend4 = #{extend4,jdbcType=VARCHAR},-->
+      <!--extend5 = #{extend5,jdbcType=VARCHAR},-->
+      <!--category_id = #{categoryId,jdbcType=INTEGER},-->
+      <!--purchase_no = #{purchaseNo,jdbcType=VARCHAR},-->
+      <!--dn_external = #{dnExternal,jdbcType=VARCHAR},-->
+      <!--is_usable = #{isUsable,jdbcType=VARCHAR}-->
+    <!--where rid = #{rid,jdbcType=BIGINT}-->
+  <!--</update>-->
+</mapper>
