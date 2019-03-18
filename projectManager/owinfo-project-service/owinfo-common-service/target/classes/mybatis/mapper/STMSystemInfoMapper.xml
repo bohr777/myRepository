@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.owinfo.dao.STMSystemInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.owinfo.entity.STMSystemInfo" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="Sys_Code" property="sysCode" jdbcType="VARCHAR" />
+    <result column="ParentID" property="parentid" jdbcType="VARCHAR" />
+    <result column="Sys_Tier" property="sysTier" jdbcType="INTEGER" />
+    <result column="Sys_Name" property="sysName" jdbcType="NVARCHAR" />
+    <result column="Sys_Level" property="sysLevel" jdbcType="VARCHAR" />
+    <result column="Sys_Category" property="sysCategory" jdbcType="VARCHAR" />
+    <result column="Online_Date" property="onlineDate" jdbcType="DATE" />
+    <result column="Outline_Date" property="outlineDate" jdbcType="DATE" />
+    <result column="Url" property="url" jdbcType="NVARCHAR" />
+    <result column="Introduction" property="introduction" jdbcType="NVARCHAR" />
+    <result column="Open_Mode" property="openMode" jdbcType="INTEGER" />
+    <result column="Creator" property="creator" jdbcType="VARCHAR" />
+    <result column="Creator_Name" property="creatorName" jdbcType="NVARCHAR" />
+    <result column="Creator_Path" property="creatorPath" jdbcType="NVARCHAR" />
+    <result column="Create_Time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="Modifor" property="modifor" jdbcType="VARCHAR" />
+    <result column="Modifor_Name" property="modiforName" jdbcType="NVARCHAR" />
+    <result column="Modifor_Path" property="modiforPath" jdbcType="NVARCHAR" />
+    <result column="Modifor_Time" property="modiforTime" jdbcType="TIMESTAMP" />
+    <result column="L1_Sys_ID" property="l1SysId" jdbcType="VARCHAR" />
+    <result column="L1_Sys_Name" property="l1SysName" jdbcType="NVARCHAR" />
+    <result column="L2_Sys_ID" property="l2SysId" jdbcType="VARCHAR" />
+    <result column="L2_Sys_Name" property="l2SysName" jdbcType="NVARCHAR" />
+    <result column="L3_Sys_ID" property="l3SysId" jdbcType="VARCHAR" />
+    <result column="L3_Sys_Name" property="l3SysName" jdbcType="NVARCHAR" />
+    <result column="Del_Flag" property="delFlag" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, Sys_Code, ParentID, Sys_Tier, Sys_Name, Sys_Level, Sys_Category, Online_Date, 
+    Outline_Date, Url, Introduction, Open_Mode, Creator, Creator_Name, Creator_Path, 
+    Create_Time, Modifor, Modifor_Name, Modifor_Path, Modifor_Time, L1_Sys_ID, L1_Sys_Name, 
+    L2_Sys_ID, L2_Sys_Name, L3_Sys_ID, L3_Sys_Name, Del_Flag
+  </sql>
+  <!--<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >-->
+    <!--select -->
+    <!--<include refid="Base_Column_List" />-->
+    <!--from STM_SystemInfo-->
+    <!--where ID = #{id,jdbcType=VARCHAR}-->
+  <!--</select>-->
+  <!--<delete id="deleteByPrimaryKey" parameterType="java.lang.String" >-->
+    <!--delete from STM_SystemInfo-->
+    <!--where ID = #{id,jdbcType=VARCHAR}-->
+  <!--</delete>-->
+  <!--<insert id="insert" parameterType="com.owinfo.entity.STMSystemInfo" >-->
+    <!--insert into STM_SystemInfo (ID, Sys_Code, ParentID, -->
+      <!--Sys_Tier, Sys_Name, Sys_Level, -->
+      <!--Sys_Category, Online_Date, Outline_Date, -->
+      <!--Url, Introduction, Open_Mode, -->
+      <!--Creator, Creator_Name, Creator_Path, -->
+      <!--Create_Time, Modifor, Modifor_Name, -->
+      <!--Modifor_Path, Modifor_Time, L1_Sys_ID, -->
+      <!--L1_Sys_Name, L2_Sys_ID, L2_Sys_Name, -->
+      <!--L3_Sys_ID, L3_Sys_Name, Del_Flag-->
+      <!--)-->
+    <!--values (#{id,jdbcType=VARCHAR}, #{sysCode,jdbcType=VARCHAR}, #{parentid,jdbcType=VARCHAR}, -->
+      <!--#{sysTier,jdbcType=INTEGER}, #{sysName,jdbcType=NVARCHAR}, #{sysLevel,jdbcType=VARCHAR}, -->
+      <!--#{sysCategory,jdbcType=VARCHAR}, #{onlineDate,jdbcType=DATE}, #{outlineDate,jdbcType=DATE}, -->
+      <!--#{url,jdbcType=NVARCHAR}, #{introduction,jdbcType=NVARCHAR}, #{openMode,jdbcType=INTEGER}, -->
+      <!--#{creator,jdbcType=VARCHAR}, #{creatorName,jdbcType=NVARCHAR}, #{creatorPath,jdbcType=NVARCHAR}, -->
+      <!--#{createTime,jdbcType=TIMESTAMP}, #{modifor,jdbcType=VARCHAR}, #{modiforName,jdbcType=NVARCHAR}, -->
+      <!--#{modiforPath,jdbcType=NVARCHAR}, #{modiforTime,jdbcType=TIMESTAMP}, #{l1SysId,jdbcType=VARCHAR}, -->
+      <!--#{l1SysName,jdbcType=NVARCHAR}, #{l2SysId,jdbcType=VARCHAR}, #{l2SysName,jdbcType=NVARCHAR}, -->
+      <!--#{l3SysId,jdbcType=VARCHAR}, #{l3SysName,jdbcType=NVARCHAR}, #{delFlag,jdbcType=INTEGER}-->
+      <!--)-->
+  <!--</insert>-->
+  <!--<insert id="insertSelective" parameterType="com.owinfo.entity.STMSystemInfo" >-->
+    <!--insert into STM_SystemInfo-->
+    <!--<trim prefix="(" suffix=")" suffixOverrides="," >-->
+      <!--<if test="id != null" >-->
+        <!--ID,-->
+      <!--</if>-->
+      <!--<if test="sysCode != null" >-->
+        <!--Sys_Code,-->
+      <!--</if>-->
+      <!--<if test="parentid != null" >-->
+        <!--ParentID,-->
+      <!--</if>-->
+      <!--<if test="sysTier != null" >-->
+        <!--Sys_Tier,-->
+      <!--</if>-->
+      <!--<if test="sysName != null" >-->
+        <!--Sys_Name,-->
+      <!--</if>-->
+      <!--<if test="sysLevel != null" >-->
+        <!--Sys_Level,-->
+      <!--</if>-->
+      <!--<if test="sysCategory != null" >-->
+        <!--Sys_Category,-->
+      <!--</if>-->
+      <!--<if test="onlineDate != null" >-->
+        <!--Online_Date,-->
+      <!--</if>-->
+      <!--<if test="outlineDate != null" >-->
+        <!--Outline_Date,-->
+      <!--</if>-->
+      <!--<if test="url != null" >-->
+        <!--Url,-->
+      <!--</if>-->
+      <!--<if test="introduction != null" >-->
+        <!--Introduction,-->
+      <!--</if>-->
+      <!--<if test="openMode != null" >-->
+        <!--Open_Mode,-->
+      <!--</if>-->
+      <!--<if test="creator != null" >-->
+        <!--Creator,-->
+      <!--</if>-->
+      <!--<if test="creatorName != null" >-->
+        <!--Creator_Name,-->
+      <!--</if>-->
+      <!--<if test="creatorPath != null" >-->
+        <!--Creator_Path,-->
+      <!--</if>-->
+      <!--<if test="createTime != null" >-->
+        <!--Create_Time,-->
+      <!--</if>-->
+      <!--<if test="modifor != null" >-->
+        <!--Modifor,-->
+      <!--</if>-->
+      <!--<if test="modiforName != null" >-->
+        <!--Modifor_Name,-->
+      <!--</if>-->
+      <!--<if test="modiforPath != null" >-->
+        <!--Modifor_Path,-->
+      <!--</if>-->
+      <!--<if test="modiforTime != null" >-->
+        <!--Modifor_Time,-->
+      <!--</if>-->
+      <!--<if test="l1SysId != null" >-->
+        <!--L1_Sys_ID,-->
+      <!--</if>-->
+      <!--<if test="l1SysName != null" >-->
+        <!--L1_Sys_Name,-->
+      <!--</if>-->
+      <!--<if test="l2SysId != null" >-->
+        <!--L2_Sys_ID,-->
+      <!--</if>-->
+      <!--<if test="l2SysName != null" >-->
+        <!--L2_Sys_Name,-->
+      <!--</if>-->
+      <!--<if test="l3SysId != null" >-->
+        <!--L3_Sys_ID,-->
+      <!--</if>-->
+      <!--<if test="l3SysName != null" >-->
+        <!--L3_Sys_Name,-->
+      <!--</if>-->
+      <!--<if test="delFlag != null" >-->
+        <!--Del_Flag,-->
+      <!--</if>-->
+    <!--</trim>-->
+    <!--<trim prefix="values (" suffix=")" suffixOverrides="," >-->
+      <!--<if test="id != null" >-->
+        <!--#{id,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="sysCode != null" >-->
+        <!--#{sysCode,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="parentid != null" >-->
+        <!--#{parentid,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="sysTier != null" >-->
+        <!--#{sysTier,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="sysName != null" >-->
+        <!--#{sysName,jdbcType=NVARCHAR},-->
+      <!--</if>-->
+      <!--<if test="sysLevel != null" >-->
+        <!--#{sysLevel,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="sysCategory != null" >-->
+        <!--#{sysCategory,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="onlineDate != null" >-->
+        <!--#{onlineDate,jdbcType=DATE},-->
+      <!--</if>-->
+      <!--<if test="outlineDate != null" >-->
+        <!--#{outlineDate,jdbcType=DATE},-->
+      <!--</if>-->
+      <!--<if test="url != null" >-->
+        <!--#{url,jdbcType=NVARCHAR},-->
+      <!--</if>-->
+      <!--<if test="introduction != null" >-->
+        <!--#{introduction,jdbcType=NVARCHAR},-->
+      <!--</if>-->
+      <!--<if test="openMode != null" >-->
+        <!--#{openMode,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="creator != null" >-->
+        <!--#{creator,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="creatorName != null" >-->
+        <!--#{creatorName,jdbcType=NVARCHAR},-->
+      <!--</if>-->
+      <!--<if test="creatorPath != null" >-->
+        <!--#{creatorPath,jdbcType=NVARCHAR},-->
+      <!--</if>-->
+      <!--<if test="createTime != null" >-->
+        <!--#{createTime,jdbcType=TIMESTAMP},-->
+      <!--</if>-->
+      <!--<if test="modifor != null" >-->
+        <!--#{modifor,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="modiforName != null" >-->
+        <!--#{modiforName,jdbcType=NVARCHAR},-->
+      <!--</if>-->
+      <!--<if test="modiforPath != null" >-->
+        <!--#{modiforPath,jdbcType=NVARCHAR},-->
+      <!--</if>-->
+      <!--<if test="modiforTime != null" >-->
+        <!--#{modiforTime,jdbcType=TIMESTAMP},-->
+      <!--</if>-->
+      <!--<if test="l1SysId != null" >-->
+        <!--#{l1SysId,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="l1SysName != null" >-->
+        <!--#{l1SysName,jdbcType=NVARCHAR},-->
+      <!--</if>-->
+      <!--<if test="l2SysId != null" >-->
+        <!--#{l2SysId,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="l2SysName != null" >-->
+        <!--#{l2SysName,jdbcType=NVARCHAR},-->
+      <!--</if>-->
+      <!--<if test="l3SysId != null" >-->
+        <!--#{l3SysId,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="l3SysName != null" >-->
+        <!--#{l3SysName,jdbcType=NVARCHAR},-->
+      <!--</if>-->
+      <!--<if test="delFlag != null" >-->
+        <!--#{delFlag,jdbcType=INTEGER},-->
+      <!--</if>-->
+    <!--</trim>-->
+  <!--</insert>-->
+  <!--<update id="updateByPrimaryKeySelective" parameterType="com.owinfo.entity.STMSystemInfo" >-->
+    <!--update STM_SystemInfo-->
+    <!--<set >-->
+      <!--<if test="sysCode != null" >-->
+        <!--Sys_Code = #{sysCode,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="parentid != null" >-->
+        <!--ParentID = #{parentid,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="sysTier != null" >-->
+        <!--Sys_Tier = #{sysTier,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="sysName != null" >-->
+        <!--Sys_Name = #{sysName,jdbcType=NVARCHAR},-->
+      <!--</if>-->
+      <!--<if test="sysLevel != null" >-->
+        <!--Sys_Level = #{sysLevel,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="sysCategory != null" >-->
+        <!--Sys_Category = #{sysCategory,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="onlineDate != null" >-->
+        <!--Online_Date = #{onlineDate,jdbcType=DATE},-->
+      <!--</if>-->
+      <!--<if test="outlineDate != null" >-->
+        <!--Outline_Date = #{outlineDate,jdbcType=DATE},-->
+      <!--</if>-->
+      <!--<if test="url != null" >-->
+        <!--Url = #{url,jdbcType=NVARCHAR},-->
+      <!--</if>-->
+      <!--<if test="introduction != null" >-->
+        <!--Introduction = #{introduction,jdbcType=NVARCHAR},-->
+      <!--</if>-->
+      <!--<if test="openMode != null" >-->
+        <!--Open_Mode = #{openMode,jdbcType=INTEGER},-->
+      <!--</if>-->
+      <!--<if test="creator != null" >-->
+        <!--Creator = #{creator,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="creatorName != null" >-->
+        <!--Creator_Name = #{creatorName,jdbcType=NVARCHAR},-->
+      <!--</if>-->
+      <!--<if test="creatorPath != null" >-->
+        <!--Creator_Path = #{creatorPath,jdbcType=NVARCHAR},-->
+      <!--</if>-->
+      <!--<if test="createTime != null" >-->
+        <!--Create_Time = #{createTime,jdbcType=TIMESTAMP},-->
+      <!--</if>-->
+      <!--<if test="modifor != null" >-->
+        <!--Modifor = #{modifor,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="modiforName != null" >-->
+        <!--Modifor_Name = #{modiforName,jdbcType=NVARCHAR},-->
+      <!--</if>-->
+      <!--<if test="modiforPath != null" >-->
+        <!--Modifor_Path = #{modiforPath,jdbcType=NVARCHAR},-->
+      <!--</if>-->
+      <!--<if test="modiforTime != null" >-->
+        <!--Modifor_Time = #{modiforTime,jdbcType=TIMESTAMP},-->
+      <!--</if>-->
+      <!--<if test="l1SysId != null" >-->
+        <!--L1_Sys_ID = #{l1SysId,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="l1SysName != null" >-->
+        <!--L1_Sys_Name = #{l1SysName,jdbcType=NVARCHAR},-->
+      <!--</if>-->
+      <!--<if test="l2SysId != null" >-->
+        <!--L2_Sys_ID = #{l2SysId,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="l2SysName != null" >-->
+        <!--L2_Sys_Name = #{l2SysName,jdbcType=NVARCHAR},-->
+      <!--</if>-->
+      <!--<if test="l3SysId != null" >-->
+        <!--L3_Sys_ID = #{l3SysId,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="l3SysName != null" >-->
+        <!--L3_Sys_Name = #{l3SysName,jdbcType=NVARCHAR},-->
+      <!--</if>-->
+      <!--<if test="delFlag != null" >-->
+        <!--Del_Flag = #{delFlag,jdbcType=INTEGER},-->
+      <!--</if>-->
+    <!--</set>-->
+    <!--where ID = #{id,jdbcType=VARCHAR}-->
+  <!--</update>-->
+  <!--<update id="updateByPrimaryKey" parameterType="com.owinfo.entity.STMSystemInfo" >-->
+    <!--update STM_SystemInfo-->
+    <!--set Sys_Code = #{sysCode,jdbcType=VARCHAR},-->
+      <!--ParentID = #{parentid,jdbcType=VARCHAR},-->
+      <!--Sys_Tier = #{sysTier,jdbcType=INTEGER},-->
+      <!--Sys_Name = #{sysName,jdbcType=NVARCHAR},-->
+      <!--Sys_Level = #{sysLevel,jdbcType=VARCHAR},-->
+      <!--Sys_Category = #{sysCategory,jdbcType=VARCHAR},-->
+      <!--Online_Date = #{onlineDate,jdbcType=DATE},-->
+      <!--Outline_Date = #{outlineDate,jdbcType=DATE},-->
+      <!--Url = #{url,jdbcType=NVARCHAR},-->
+      <!--Introduction = #{introduction,jdbcType=NVARCHAR},-->
+      <!--Open_Mode = #{openMode,jdbcType=INTEGER},-->
+      <!--Creator = #{creator,jdbcType=VARCHAR},-->
+      <!--Creator_Name = #{creatorName,jdbcType=NVARCHAR},-->
+      <!--Creator_Path = #{creatorPath,jdbcType=NVARCHAR},-->
+      <!--Create_Time = #{createTime,jdbcType=TIMESTAMP},-->
+      <!--Modifor = #{modifor,jdbcType=VARCHAR},-->
+      <!--Modifor_Name = #{modiforName,jdbcType=NVARCHAR},-->
+      <!--Modifor_Path = #{modiforPath,jdbcType=NVARCHAR},-->
+      <!--Modifor_Time = #{modiforTime,jdbcType=TIMESTAMP},-->
+      <!--L1_Sys_ID = #{l1SysId,jdbcType=VARCHAR},-->
+      <!--L1_Sys_Name = #{l1SysName,jdbcType=NVARCHAR},-->
+      <!--L2_Sys_ID = #{l2SysId,jdbcType=VARCHAR},-->
+      <!--L2_Sys_Name = #{l2SysName,jdbcType=NVARCHAR},-->
+      <!--L3_Sys_ID = #{l3SysId,jdbcType=VARCHAR},-->
+      <!--L3_Sys_Name = #{l3SysName,jdbcType=NVARCHAR},-->
+      <!--Del_Flag = #{delFlag,jdbcType=INTEGER}-->
+    <!--where ID = #{id,jdbcType=VARCHAR}-->
+  <!--</update>-->
+
+
+  <select id="selectOrganizerLikeSystemName" resultType="com.owinfo.entity.SystemInfoResult">
+    SELECT  DISTINCT
+    s.ID id,Sys_Name systemName,s.Sys_Tier systemTier,
+    o.ID stmOgusId,o.Ogus_Type ogusType,o.Ogus_Name ogusName,
+    o.Ogus_Path ogusPath,o.Parent_Dept_ID parentDeptID
+    FROM STM_SystemInfo s
+    INNER JOIN STM_Ogus o
+    ON s.ID=o.Sys_ID AND o.Ogus_ID!='' AND o.Ogus_Type='Organizer'
+    WHERE s.Sys_Name LIKE ('%'+(#{systemName}+'%')) AND s.Sys_Tier IN (2,3) AND s.Del_Flag=0
+  </select>
+  <select id="selectSystemLikeSystemName" resultType="com.owinfo.entity.SystemInfoResult">
+    SELECT  DISTINCT
+    s.ID id,Sys_Name systemName,s.Sys_Tier systemTier
+    FROM STM_SystemInfo s
+    INNER JOIN STM_Ogus o
+    ON s.ID=o.Sys_ID AND o.Ogus_ID!=''
+    WHERE s.Sys_Name LIKE ('%'+(#{systemName}+'%')) AND s.Sys_Tier IN (2,3) AND s.Del_Flag=0
+    <if test="systemLevel != null and systemLevel !='double'" >
+    AND Sys_Level = #{systemLevel,jdbcType=VARCHAR}
+    </if>
+  </select>
+  <select id="selectSystemById" resultType="com.owinfo.entity.SystemInfoResult">
+    SELECT
+    s.ID id,s.Sys_Name systemName,s.Sys_Tier systemTier,
+    o.ID stmOgusId,o.Ogus_Type ogusType,o.Ogus_Name ogusName,
+    o.Ogus_Path ogusPath,o.Parent_Dept_ID parentDeptID
+    FROM STM_SystemInfo s
+    INNER JOIN STM_Ogus o
+    ON s.ID=o.Sys_ID AND o.Ogus_ID!='' AND o.Ogus_Type in ('Organizer','Leader')
+    WHERE o.Sys_ID=#{systemId} AND s.Sys_Tier IN (2,3) AND s.Del_Flag=0
+  </select>
+
+  <select id="selectSystemBySystemName" resultType="com.owinfo.entity.SystemInfoResult">
+    SELECT
+    s.ID id,s.Sys_Name systemName,s.Sys_Tier systemTier,
+    o.ID stmOgusId,o.Ogus_Type ogusType,o.Ogus_Name ogusName,
+    o.Ogus_Path ogusPath,o.Parent_Dept_ID parentDeptID
+    FROM STM_SystemInfo s
+    INNER JOIN STM_Ogus o
+    ON s.ID=o.Sys_ID AND o.Ogus_ID!='' AND o.Ogus_Type in ('Organizer','Leader')
+    WHERE s.Sys_Name=#{systemName} AND s.Sys_Tier IN (2,3) AND s.Del_Flag=0
+  </select>
+  <select id="findSystemIdBySystemName" resultType="String">
+    SELECT ID FROM STM_SystemInfo WHERE Sys_Name=#{systemName}
+  </select>
+</mapper>

@@ -1,0 +1,127 @@
+#date 11.30
+#v1 liyue
+server:
+  port: 8288
+  tomcat:
+    uri-encoding: UTF-8
+
+managerCode: TASK_MANAGER
+systemCode: CPM
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.cloud.client.ipAddress}:${spring.application.instance_id:${server.port}}
+    lease-renewal-interval-in-seconds: 5
+
+spring:
+  application:
+    name: owinfo-common-service
+
+  cloud.loadbalancer.retry.enabled: true
+
+  jackson:
+    dateFormat: yyyy-MM-dd HH:mm:ss
+    jodaDateTimeFormat: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+  datasource:
+      url: jdbc:sqlserver://192.168.6.213:1433;database=CPM3_BG
+      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      username: sa
+      password: 1qaz!QAZ
+#      url: jdbc:sqlserver://192.168.6.213\SQL2008;database=cpm2018
+#      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+#      username: sa
+#      password: 1qaz!QAZ
+#      url: jdbc:sqlserver://223.223.199.22:2221;database=CPM3_BG
+#      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+#      username: sa
+#      password: 1qaz!QAZ
+#      url: jdbc:sqlserver://10.63.41.138:1433;database=cpm2018
+#      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+#      username: CPM2018
+#      password: cpm2018
+      type: com.alibaba.druid.pool.DruidDataSource
+      maxActive: 10
+      initialSize: 1
+      maxWait: 120000
+      minIdle: 1
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: select 'x'
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    password:
+    pool:
+      max-idle: 8
+      min-idle: 0
+      max-active: 8
+      max-wait: -1
+    timeout: 5000
+
+mybatis:
+  configLocation: classpath:mybatis/mybatis-config.xml
+  mapperLocations: classpath:mybatis/mapper/*.xml
+  typeAliasesPackage: com.owinfo.object
+  configuration:
+    cache-enabled: true
+
+pagehelper:
+  offset-as-page-num: true
+  row-bounds-with-count: true
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+  helperDialect: mysql
+
+logging.level.com.owinfo.dao: DEBUG
+logging.level.org.springframework: WARN
+
+#热部署
+spring.devtools.restart.enabled: true
+
+#熔断器
+feign:
+  hystrix:
+    enabled: true
+
+#超时时间
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+ribbon:
+  ConnectTimeout: 30000
+  ReadTimeout: 30000
+  OkToRetryOnAllOperations: true
+  MaxAutoRetriesNextServer: 1
+  MaxAutoRetries: 1
+
+#监控设置
+endpoints.health.sensitive: false
+
+#监控安全验证
+management.security.enabled: false
+
+
+logging:
+  file: E:/logs/project_manager/service_log.log
+  level:
+    root: INFO
+    org.springfromework.web: debug
+    org.hibernate: error

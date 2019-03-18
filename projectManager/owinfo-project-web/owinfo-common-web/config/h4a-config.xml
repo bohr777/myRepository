@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application>
+	<module name="h4aIdentity">
+		<group name="wsCache">
+			<!-- cacheControl 值为off为开启缓存，值为on为关闭缓存 -->
+			<configValue key="cacheControl">on</configValue>
+			<configValue key="cacheTime">300000000</configValue>
+			<configValue key="cacheClearTime">1</configValue>
+			<configValue key="initialDelay">0</configValue>
+			<configValue key="clearCachePeriod">1440</configValue>
+		</group>
+	</module>
+	<module name="passportSSO">
+		<group name="passport">
+			<configValue key="appID">DATAQUERY</configValue>
+			<configValue key="appSlidingTime">0</configValue>
+			<configValue key="idAuthenticationMode">forms</configValue>
+			<configValue key="paramT">token</configValue>
+			<configValue key="defaultAuthenticationMode">FormsAuthentication</configValue>
+		</group>
+		<group name="url">
+			<configValue key="logoffAutoRedirect">true</configValue>
+			<configValue key="logoffToDefaultUriString">/index</configValue>
+			<configValue key="logOffCallBackUrl">/LogoffCallbackUrl.axd</configValue>
+		</group>
+		<group name="defaultAuthenticationMode">
+			<configValue key="*.jpg">Anonymous</configValue>
+			<configValue key="*.gif">Anonymous</configValue>
+			<configValue key="/docmanager/outSystemFind/*.shtml">Anonymous</configValue>
+			<configValue key="/docmanager/outSysFind.shtml">Anonymous</configValue>
+			<configValue key="/upload/outSystemSign.shtml">Anonymous</configValue>
+			<configValue key="/upload/outSysSign.shtml">Anonymous</configValue>
+			<configValue key="/upload/outSysAutoSign.shtml">Anonymous</configValue>
+			<configValue key="/outsys/login.shtml">Anonymous</configValue>
+			<configValue key="/Read/Index.shtml">Anonymous</configValue>
+			<configValue key="/anonymous.html">Anonymous</configValue>
+			<configValue key="/WindowsAuthentication/*.jsp">WindowsAuthentication</configValue>
+			<configValue key="/WindowsAuthentication/test*">WindowsAuthentication</configValue>
+		</group>
+	</module>
+	<module name="SSOAddress">
+		<group name="ssoAddress">
+			<!-- 此处为填写IPassPortSSO实现类。注：如不实现IPassPortSSO接口此处无需填写 -->
+			<configValue key="PassportManager">PassportSSO</configValue>
+		</group>
+	</module>
+	<module name="h4a_default">
+		<group name="wcf_default">
+			<configValue key="default_cache_max_capacity">10000</configValue>
+			<configValue key="default_BaseView">CCIC_VIEW</configValue>
+			<configValue key="default_Application_name">ORGANIZATIONS</configValue>
+		</group>
+		<group name="Intercepter_load_switch">
+			<configValue key="Intercepter_Control">false</configValue>
+		</group>
+	</module>
+</application>
+
+
+
+
+
+
+
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<application>-->
+<!--<module name="h4aIdentity">-->
+	<!--<group name="wsCache">-->
+		<!--&lt;!&ndash; cacheControl 值为off为开启缓存，值为on为关闭缓存 &ndash;&gt;-->
+		<!--<configValue key="cacheControl">on</configValue>-->
+		<!--<configValue key="cacheTime">300000000</configValue>-->
+		<!--<configValue key="cacheClearTime">1</configValue>-->
+		<!--<configValue key="initialDelay">0</configValue>-->
+		<!--<configValue key="clearCachePeriod">1440</configValue>-->
+	<!--</group>-->
+<!--</module>-->
+<!--<module name="passportSSO">-->
+	<!--<group name="passport">-->
+		<!--<configValue key="appID">DATAQUERY</configValue>-->
+		<!--<configValue key="appSlidingTime">0</configValue>-->
+		<!--<configValue key="idAuthenticationMode">forms</configValue>-->
+		<!--<configValue key="paramT">token</configValue>-->
+		<!--<configValue key="defaultAuthenticationMode">FormsAuthentication</configValue>-->
+		<!--&lt;!&ndash; <configValue key="defaultAuthenticationMode">WindowsAuthentication</configValue> &ndash;&gt;-->
+	<!--</group>-->
+	<!--<group name="url">-->
+		<!--<configValue key="logoffAutoRedirect">true</configValue>-->
+		<!--<configValue key="logoffToDefaultUriString">/index</configValue>-->
+		<!--<configValue key="logOffCallBackUrl">/LogoffCallbackUrl.axd</configValue>-->
+	<!--</group>-->
+	<!--<group name="defaultAuthenticationMode">-->
+		<!--<configValue key="*.jpg">Anonymous</configValue>-->
+		<!--<configValue key="*.gif">Anonymous</configValue>-->
+		<!--<configValue key="/docmanager/outSystemFind/*.shtml">Anonymous</configValue>-->
+		<!--<configValue key="/docmanager/outSysFind.shtml">Anonymous</configValue>-->
+		<!--<configValue key="/upload/outSystemSign.shtml">Anonymous</configValue>-->
+		<!--<configValue key="/upload/outSysSign.shtml">Anonymous</configValue>-->
+		<!--<configValue key="/upload/outSysAutoSign.shtml">Anonymous</configValue>-->
+		<!--<configValue key="/outsys/login.shtml">Anonymous</configValue>-->
+		<!--<configValue key="/Read/Index.shtml">Anonymous</configValue>-->
+		<!--<configValue key="/anonymous.html">Anonymous</configValue>-->
+		<!--<configValue key="/WindowsAuthentication/*.jsp">WindowsAuthentication</configValue>-->
+		<!--<configValue key="/WindowsAuthentication/test*">WindowsAuthentication</configValue>-->
+	<!--</group>-->
+<!--</module>-->
+<!--<module name="SSOAddress">-->
+	<!--<group name="ssoAddress">-->
+		<!--&lt;!&ndash; 此处为填写IPassPortSSO实现类。注：如不实现IPassPortSSO接口此处无需填写 &ndash;&gt;-->
+		<!--<configValue key="PassportManager">PassportSSO</configValue>-->
+	<!--</group>-->
+<!--</module>-->
+<!--<module name="h4a_default">-->
+	<!--<group name="wcf_default">-->
+		<!--<configValue key="default_cache_max_capacity">10000</configValue>-->
+		<!--<configValue key="default_BaseView">CCIC_VIEW</configValue>-->
+		<!--<configValue key="default_Application_name">ORGANIZATIONS</configValue>-->
+	<!--</group>-->
+	<!--<group name="Intercepter_load_switch">-->
+		<!--<configValue key="Intercepter_Control">false</configValue>-->
+	<!--</group>-->
+<!--</module>-->
+<!--</application>-->

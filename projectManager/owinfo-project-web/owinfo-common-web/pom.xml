@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>owinfo-project-web</artifactId>
+        <groupId>com.owinfo</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>owinfo-common-web</artifactId>
+    <packaging>jar</packaging>
+
+    <name>owinfo-common-web</name>
+    <url>http://maven.apache.org</url>
+    <dependencies>
+        <!--<dependency>-->
+        <!--<groupId>com.owinfo</groupId>-->
+        <!--<artifactId>config-sdk-1.0.4</artifactId>-->
+        <!--<scope>system</scope>-->
+        <!--<version>1.0.4</version>-->
+        <!--<systemPath>${project.basedir}/lib/config-sdk-1.0.4.jar</systemPath>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+        <!--<groupId>com.owinfo</groupId>-->
+        <!--<artifactId>h4a-sdk-1.0.4</artifactId>-->
+        <!--<scope>system</scope>-->
+        <!--<version>1.0.4</version>-->
+        <!--<systemPath>${project.basedir}/lib/h4a-sdk-1.0.4.jar</systemPath>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+        <!--<groupId>com.owinfo</groupId>-->
+        <!--<artifactId>sso-sdk-1.0.4</artifactId>-->
+        <!--<scope>system</scope>-->
+        <!--<version>1.0.4</version>-->
+        <!--<systemPath>${project.basedir}/lib/sso-sdk-1.0.4.jar</systemPath>-->
+        <!--</dependency>-->
+        <dependency>
+            <groupId>com.my</groupId>
+            <artifactId>sso-sdk</artifactId>
+            <version>1.0.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.my</groupId>
+            <artifactId>h4a-sdk</artifactId>
+            <version>1.0.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.my</groupId>
+            <artifactId>config-sdk</artifactId>
+            <version>1.0.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.samba.jcifs</groupId>
+            <artifactId>jcifs</artifactId>
+            <version>1.2.19</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <finalName>owinfo-common-web</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <fork>true</fork>
+                    <mainClass>com.owinfo.web.ApplicationWeb</mainClass>
+                </configuration>
+            </plugin>
+
+            <!--<plugin>-->
+            <!--<groupId>org.apache.maven.plugins</groupId>-->
+            <!--<artifactId>maven-jar-plugin</artifactId>-->
+            <!--<configuration>-->
+            <!--<classesDirectory>target/classes/</classesDirectory>-->
+            <!--<archive>-->
+            <!--<manifest>-->
+            <!--<mainClass>com.alibaba.dubbo.container.Main</mainClass>-->
+            <!--&lt;!&ndash; 打包时 MANIFEST.MF文件不记录的时间戳版本 &ndash;&gt;-->
+            <!--<useUniqueVersions>false</useUniqueVersions>-->
+            <!--<addClasspath>true</addClasspath>-->
+            <!--<classpathPrefix>lib/</classpathPrefix>-->
+            <!--</manifest>-->
+            <!--<manifestEntries>-->
+            <!--<Class-Path>lib/config-sdk-1.0.4.jar lib/h4a-sdk-1.0.4.jar lib/sso-sdk-1.0.4.jar</Class-Path>-->
+            <!--</manifestEntries>-->
+            <!--</archive>-->
+            <!--</configuration>-->
+            <!--</plugin>-->
+        </plugins>
+    </build>
+
+</project>

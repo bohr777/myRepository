@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.owinfo.dao.MaterialMapper">
+  <sql id="table">MATERIAL</sql>
+  <resultMap id="BaseResultMap" type="com.owinfo.entity.Material">
+    <id column="ID" jdbcType="NVARCHAR" property="id" />
+    <result column="APPLICATION_NAME" jdbcType="NVARCHAR" property="applicationName" />
+    <result column="PROGRAM_NAME" jdbcType="NVARCHAR" property="programName" />
+    <result column="RESOURCE_ID" jdbcType="NVARCHAR" property="resourceId" />
+    <result column="SORT_ID" jdbcType="INTEGER" property="sortId" />
+    <result column="CLASS" jdbcType="NVARCHAR" property="clazz" />
+    <result column="TITLE" jdbcType="NVARCHAR" property="title" />
+    <result column="PAGE_QUANTITY" jdbcType="INTEGER" property="pageQuantity" />
+    <result column="FILE_PATH" jdbcType="NVARCHAR" property="filePath" />
+    <result column="ORIGINAL_NAME" jdbcType="NVARCHAR" property="originalName" />
+    <result column="CREATOR" jdbcType="NVARCHAR" property="creator" />
+    <result column="LAST_UPLOAD_TAG" jdbcType="NVARCHAR" property="lastUploadTag" />
+    <result column="CREATE_DATETIME" jdbcType="TIMESTAMP" property="createDatetime" />
+    <result column="CHECKOUT_USER" jdbcType="NVARCHAR" property="checkoutUser" />
+    <result column="CHECKOUT_TIME" jdbcType="TIMESTAMP" property="checkoutTime" />
+    <result column="LAST_MODIFY_TIME" jdbcType="TIMESTAMP" property="lastModifyTime" />
+    <result column="EXTRA_DATA" jdbcType="NVARCHAR" property="extraData" />
+  </resultMap>
+  <select id="getById" resultMap="BaseResultMap">
+    SELECT * FROM MATERIAL WHERE id=#{id}
+  </select>
+  <select id="listByResourceId" resultMap="BaseResultMap">
+    SELECT * FROM MATERIAL WHERE resource_id=#{id}
+  </select>
+  <update id="deleteById1">
+    DELETE FROM MATERIAL WHERE resource_id=#{resourceId}
+  </update>
+  <select id="isLocal" resultType="java.lang.Integer">
+    SELECT COUNT(*) FROM MATERIAL WHERE ID=#{id} AND FILE_PATH IS NOT NULL AND FILE_PATH!=''
+  </select>
+</mapper>

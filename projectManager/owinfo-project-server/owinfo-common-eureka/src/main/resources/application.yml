@@ -1,0 +1,28 @@
+#date 11.30
+#v1 liyue
+server:
+  port: 8761
+  tomcat:
+    uri-encoding: UTF-8
+
+eureka:
+  instance:
+    hostname: localhost
+  ip-address:
+
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+
+#关闭自我保护
+eureka.server.enable-self-preservation: false
+
+
+#logging:
+#  file: ../../logs/eureka_log.log
+#  level:
+#    org.springfromework.web: debug
+
+

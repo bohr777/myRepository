@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.owinfo.dao.PB_ProjectBaseMapper">
+    <resultMap id="BasePB_ProjectBase" type="com.owinfo.entity.PB_ProjectBase">
+        <result column="Subject" property="subject" jdbcType="VARCHAR"/>
+        <result column="ContractDepContactPerson" property="contract_peperson" jdbcType="VARCHAR"/>
+        <result column="RelationshipName" property="organizer_name" jdbcType="VARCHAR"/>
+        <result column="RelationshipGUID" property="organizer_guid" jdbcType="VARCHAR"/>
+        <result column="ChargeDeptFullPath" property="organizer_fullpath" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="queryProject" resultMap="BasePB_ProjectBase">
+        SELECT TOP 10 pro.Subject,pro.ContractDepContactPerson,pr.RelationshipName,
+        pr.RelationshipGUID,pro.ChargeDeptFullPath
+        FROM PR_ProjectRelationship pr INNER JOIN PB_ProjectBaseInfoExtend ex on ex.ProjectID=pr.ProjectGUID
+        INNER JOIN PB_ProjectBaseInfo pro on ex.ProjectID=pro.ProjectID
+        INNER JOIN PB_ProjectBase pb on pro.ProjectID=pb.ProjectID
+        <if test="follows != null">
+            AND(
+            <foreach collection="follows" index="index" item="item">
+                <choose>
+                    <when test="index &lt; follows.size-1">
+                        pro.ChargeDeptFullPath LIKE (('%'+#{item})+'%') OR
+                    </when>
+                    <otherwise>
+                        pro.ChargeDeptFullPath LIKE (('%'+#{item})+'%')
+                    </otherwise>
+                </choose>
+            </foreach>
+            )
+        </if>
+        AND pro.Subject like ('%'+(#{subject}+'%'))
+        WHERE ConfirmDate!=''AND pr.RelationshipType='contractUnit'
+        <if test="systemLevel !='' and systemLevel !='double'" >
+            AND pb.Type=#{systemLevel}
+        </if>
+    </select>
+    <select id="getByDeptGuan" resultMap="BasePB_ProjectBase">
+        SELECT pro.Subject,pro.ContractDepContactPerson,pr.RelationshipName,
+        pr.RelationshipGUID,pro.ChargeDeptFullPath
+        FROM PR_ProjectRelationship pr LEFT JOIN PB_ProjectBaseInfoExtend ex on ex.ProjectID=pr.ProjectGUID
+        INNER JOIN PB_ProjectBaseInfo pro on ex.ProjectID=pro.ProjectID
+        AND pro.ChargeDeptFullPath = #{parent}
+        INNER JOIN PB_ProjectBase prb ON ex.ProjectID=prb.ProjectID
+        AND prb.Type='Customhouse'
+        WHERE ConfirmDate!=''AND pr.RelationshipType='contractUnit'
+    </select>
+    <select id="getByDeptShu" resultMap="BasePB_ProjectBase">
+        SELECT pro.Subject,pro.ContractDepContactPerson,pr.RelationshipName,
+        pr.RelationshipGUID,pro.ChargeDeptFullPath
+        FROM PR_ProjectRelationship pr LEFT JOIN PB_ProjectBaseInfoExtend ex on ex.ProjectID=pr.ProjectGUID
+        INNER JOIN PB_ProjectBaseInfo pro on ex.ProjectID=pro.ProjectID
+        AND pro.ChargeDeptFullPath=#{parent}
+        INNER JOIN PB_ProjectBase prb ON ex.ProjectID=prb.ProjectID
+        AND prb.Type='Administration'
+        WHERE ConfirmDate!=''AND pr.RelationshipType='contractUnit'
+    </select>
+    <select id="getByDept" resultMap="BasePB_ProjectBase">
+        SELECT pro.Subject,pro.ContractDepContactPerson,pr.RelationshipName,
+        pr.RelationshipGUID,pro.ChargeDeptFullPath
+        FROM PR_ProjectRelationship pr LEFT JOIN PB_ProjectBaseInfoExtend ex on ex.ProjectID=pr.ProjectGUID
+        INNER JOIN PB_ProjectBaseInfo pro on ex.ProjectID=pro.ProjectID
+        AND pro.ChargeDeptFullPath=#{parent}
+        WHERE ConfirmDate!=''AND pr.RelationshipType='contractUnit'
+    </select>
+    <select id="listByName" resultMap="BasePB_ProjectBase">
+        SELECT TOP 10 pro.Subject,pro.ContractDepContactPerson,pr.RelationshipName,
+        pr.RelationshipGUID,pro.ChargeDeptFullPath
+        FROM PR_ProjectRelationship pr LEFT JOIN PB_ProjectBaseInfoExtend ex on ex.ProjectID=pr.ProjectGUID
+        INNER JOIN PB_ProjectBaseInfo pro on ex.ProjectID=pro.ProjectID
+        <if test="follows != null and follows.size() > 0">
+            AND(
+            <foreach collection="follows" index="index" item="item">
+                <choose>
+                    <when test="index &lt; follows.size-1">
+                        pro.ChargeDeptFullPath = #{item} OR
+                    </when>
+                    <otherwise>
+                        pro.ChargeDeptFullPath = #{item}
+                    </otherwise>
+                </choose>
+            </foreach>
+            )
+        </if>
+        AND pro.Subject LIKE (('%'+#{name})+'%')
+        <if test="type !=''">
+            INNER JOIN PB_ProjectBase prb ON ex.ProjectID=prb.ProjectID
+            AND prb.Type=#{type}
+        </if>
+        WHERE ConfirmDate!=''AND pr.RelationshipType='contractUnit'
+        ORDER BY pr.RelationshipFullPath
+    </select>
+</mapper>

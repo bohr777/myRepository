@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application>
+	<module name="h4aIdentity">
+		<group name="wsAddress">
+			<configValue key="OguReaderService">http://222.128.102.169:8088/CupaaCenterService/OguReaderService.svc</configValue>
+			<configValue key="AccreditReaderService">http://222.128.102.169:8088/CupaaCenterService/AccreditReaderService.svc</configValue>
+			<configValue key="RegisterAppService">http://222.128.102.169:8088/AppRegisterService/RegisterAppReaderService.svc</configValue>
+		</group>
+	</module>
+	<module name="passportSSO">
+		<group name="url">
+			<configValue key="authenticateUrl">http://222.128.102.169:8088/Passport/SsoLogin.aspx</configValue>
+			<configValue key="logOffUrl">http://222.128.102.169:8088/Passport/LogOff.aspx</configValue>
+		</group>
+	</module>
+	<module name="h4agis">
+		<group name="gisUrl">
+			<configValue key="url">http://localhost:8090/iserver/services/map-world/rest/maps/World</configValue>
+			<configValue key="url1">http://localhost:8090/iserver/services/map-world/rest/maps/World1</configValue>
+			<configValue key="url2">http://localhost:8090/iserver/services/map-world/rest/maps/World2</configValue>
+		</group>
+		<group name="gisToken">
+			<configValue key="token">ak=HF0BeNqiq10x60lo31aU2hAE</configValue>
+		</group>
+	</module>
+</application>

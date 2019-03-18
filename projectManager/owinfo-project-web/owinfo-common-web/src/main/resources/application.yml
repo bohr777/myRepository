@@ -1,0 +1,131 @@
+
+fontEnd: 192.168.6.145:8888/#/HBFrom
+zuulAddress: 192.168.6.145:8089
+fontAddress: http://192.168.6.145:8888/#/task
+loginAddress: http://192.168.6.145:8089/owinfoProject/taskbook/checkLogin
+
+#fontEnd: 192.168.6.131:8888/#/HBFrom
+#zuulAddress: 192.168.6.145:8089
+#fontAddress: http://192.168.6.145:8888/#/task
+#loginAddress: http://192.168.6.145:8089/owinfoProject/taskbook/checkLogin
+
+#fontEnd: 192.168.6.188:8080/#/HBFrom
+#zuulAddress: 192.168.6.145:8089
+#fontAddress: http://192.168.6.188:8080/#/task
+#loginAddress: http://192.168.6.145:8089/owinfoProject/taskbook/checkLogin
+
+
+applicationName: CPM
+#systemCode: CPM
+systemCode: CUSTOMSPROJECTEX
+adminCode: APP_ADMIN
+approveCode: TASK_CHUZHANG_APPROVE
+managerCode: TASK_MANAGER
+filePath: D://qweqwe
+HBUrl: http://localhost:8094
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.cloud.client.ipAddress}:${spring.application.instance_id:${server.port}}
+    lease-renewal-interval-in-seconds: 5
+
+server:
+  port: 8460
+  max-http-header-size: 102400
+  session:
+    timeout: 28800
+  tomcat:
+    uri-encoding: UTF-8
+
+spring:
+  application:
+    name: owinfo-project-web
+
+  http:
+    multipart:
+      max-file-size: 600Mb
+      max-request-size: 600Mb
+
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+  cloud.loadbalancer.retry.enabled: true
+
+  jackson:
+    dateFormat: yyyy-MM-dd HH:mm:ss
+    jodaDateTimeFormat: yyyy-MM-dd HH:mm:ss
+
+  redis:
+    database: 0
+    host: 192.168.0.124
+    port: 6379
+    password:
+    pool:
+      max-idle: 8
+      min-idle: 0
+      max-active: 8
+      max-wait: -1
+    timeout: 5000
+
+  thymeleaf:
+    mode: HTML5
+    encoding: UTF-8
+    content-type: text/html
+    prefix: classpath:/templates/
+    suffix: .html
+    #关闭缓存
+    cache: false
+
+#熔断器
+feign:
+  hystrix:
+    enabled: true
+
+#超时时间
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+ribbon:
+  ConnectTimeout: 30000
+  ReadTimeout: 30000
+  OkToRetryOnAllOperations: true
+  MaxAutoRetriesNextServer: 1
+  MaxAutoRetries: 1
+
+#禁止超时
+#hystrix.command.default.execution.timeout.enabled: false
+
+#热部署
+spring.devtools.restart.enabled: true
+
+#监控设置
+endpoints.health.sensitive: false
+
+#监控安全验证
+management.security.enabled: false
+
+myProps:
+  parentOrgValues: F9F9E720-BA2B-8B9D-45B7-13BC9AD4D537
+#日志输出
+#logging.level.root: DEBUG
+#logging.level.org.springframework.web: DEBUG
+
+
+logging:
+  file: E:/logs/project_manager/web_log.log
+  level:
+    org.springfromework.web: debug
+    org.hibernate: error
+
+
+

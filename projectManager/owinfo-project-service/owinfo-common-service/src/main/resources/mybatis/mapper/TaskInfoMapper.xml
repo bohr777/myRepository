@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.owinfo.dao.TaskInfoMapper" >
+  <sql id="table">BG_Task_Info</sql>
+  <resultMap id="BaseResultMap" type="com.owinfo.entity.TaskInfo" >
+    <id column="activity_id" property="activityId" jdbcType="VARCHAR" />
+    <result column="resource_id" property="resourceId" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="NVARCHAR" />
+    <result column="purpose" property="purpose" jdbcType="NVARCHAR" />
+    <result column="prev_assignee" property="prevAssignee" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="getByResourceId" resultMap="BaseResultMap">
+    SELECT * FROM BG_Task_Info WHERE resource_id=#{resourceId}
+  </select>
+  <select id="hasThis" resultType="java.lang.String">
+    SELECT activity_id FROM BG_Task_Info WHERE activity_id=#{activityId}
+  </select>
+
+  <select id="findResourceIdByActivityId" resultType="String">
+    SELECT resource_id FROM BG_Task_Info WHERE  activity_id= #{activityId}
+  </select>
+
+  <select id="findTaskInfoByActivityId" resultMap="BaseResultMap">
+    SELECT * FROM BG_Task_Info WHERE  activity_id= #{activityId}
+  </select>
+
+  <select id="getTaskInfoByResourceId" resultMap="BaseResultMap">
+    SELECT * FROM BG_Task_Info WHERE resource_id=#{resourceId} AND purpose='任务待审批'
+  </select>
+
+</mapper>

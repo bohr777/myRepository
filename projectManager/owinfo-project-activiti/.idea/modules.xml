@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://E:\ideaworkspace\project_manager 11-22\owinfo-springcloud\owinfo-project-activiti\owinfo-project-activity\owinfo-project-activiti.iml" filepath="E:\ideaworkspace\project_manager 11-22\owinfo-springcloud\owinfo-project-activiti\owinfo-project-activity\owinfo-project-activiti.iml" />
+      <module fileurl="file://$PROJECT_DIR$/owinfo-project-activity/owinfo-project-activity.iml" filepath="$PROJECT_DIR$/owinfo-project-activity/owinfo-project-activity.iml" />
+    </modules>
+  </component>
+</project>

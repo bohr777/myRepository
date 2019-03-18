@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.owinfo.dao.TaskBookMapper">
+    <sql id="table">BG_TaskBook</sql>
+    <resultMap id="BaseResultMap" type="com.owinfo.entity.TaskBook">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="origin" jdbcType="VARCHAR" property="origin"/>
+        <result column="mail_number" jdbcType="VARCHAR" property="mailNumber"/>
+        <result column="mail_title" jdbcType="VARCHAR" property="mailTitle"/>
+        <result column="mail_time" jdbcType="TIMESTAMP" property="mailTime"/>
+        <result column="competent_dept" jdbcType="NVARCHAR" property="competentDept"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="founder_id" jdbcType="VARCHAR" property="founderId"/>
+        <result column="founder_name" jdbcType="VARCHAR" property="founderName"/>
+        <result column="final_modifier_id" jdbcType="VARCHAR" property="finalModifierId"/>
+        <result column="final_modifier_name" jdbcType="VARCHAR" property="finalModifierName"/>
+        <result column="final_modify" jdbcType="TIMESTAMP" property="finalModify"/>
+        <result column="founder_fullpath" jdbcType="VARCHAR" property="founderFullpath"/>
+        <result column="final_modifier_fullpath" jdbcType="VARCHAR" property="finalModifierFullpath"/>
+        <result column="project_name" jdbcType="VARCHAR" property="projectName"/>
+        <result column="tag" jdbcType="VARCHAR" property="tag"/>
+        <result column="importance" jdbcType="CHAR" property="importance"/>
+        <result column="issue_time" jdbcType="TIMESTAMP" property="issueTime"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="is_delete" jdbcType="CHAR" property="isDelete"/>
+        <result column="plan_time" jdbcType="TIMESTAMP" property="planTime"/>
+        <result column="finish_time" jdbcType="TIMESTAMP" property="finishTime"/>
+        <result column="issue_id" jdbcType="VARCHAR" property="issueId"/>
+        <result column="issue_name" jdbcType="VARCHAR" property="issueName"/>
+        <result column="readonly" jdbcType="CHAR" property="readonly"/>
+        <result column="isdetail" jdbcType="CHAR" property="isdetail"/>
+    </resultMap>
+    <update id="deleteById1">
+      UPDATE BG_TaskBook SET is_delete='1' WHERE id=#{id}
+    </update>
+    <select id="listForAll" resultMap="BaseResultMap">
+        SELECT * FROM BG_TaskBook WHERE is_delete='0'
+        <if test="mailNumber != null and mailNumber !=''">
+            AND mail_number LIKE ('%'+(#{mailNumber}+'%'))
+        </if>
+        <if test="status == '1'.toString()">
+            AND SUBSTRING(status,0,CHARINDEX('/',status))=SUBSTRING(status,CHARINDEX('/',status)+1,LEN(status)) AND
+            SUBSTRING(status,0,CHARINDEX('/',status))!='0'
+        </if>
+        <if test="competentDept != null and competentDept !=''">
+            AND competent_dept LIKE ('%name:%'+(#{competentDept}+'%,fu%'))
+        </if>
+        <if test="follows != null">
+            AND(
+            <foreach collection="follows" index="index" item="item">
+                <choose>
+                    <when test="index &lt; follows.size-1">
+                        competent_dept LIKE ('%id:'+(#{item}+'%')) OR
+                    </when>
+                    <otherwise>
+                        competent_dept LIKE ('%id:'+(#{item}+'%'))
+                    </otherwise>
+                </choose>
+            </foreach>
+            )
+        </if>
+        <if test="tag != null and tag !=''">
+            AND tag LIKE ('%'+(#{tag}+'%'))
+        </if>
+        <if test="projectName != null and projectName !=''">
+            AND project_name LIKE ('%'+(#{projectName}+'%'))
+        </if>
+        <if test="status == '2'.toString()">
+            AND (SUBSTRING(status,0,CHARINDEX('/',status))!=SUBSTRING(status,CHARINDEX('/',status)+1,LEN(status)) OR
+            SUBSTRING(status,0,CHARINDEX('/',status))='0')
+        </if>
+        ORDER BY issue_time DESC, create_time DESC
+    </select>
+    <select id="getById" resultMap="BaseResultMap">
+    SELECT * FROM BG_TaskBook WHERE id=#{id} AND is_delete='0'
+  </select>
+    <select id="baseList" resultType="java.lang.String">
+        SELECT importance FROM BG_TaskBook WHERE is_delete='0'
+    </select>
+    <select id="checkNum" resultType="java.lang.String">
+        SELECT mail_number FROM BG_TaskBook WHERE is_delete='0' AND mail_number=#{mailNum}
+    </select>
+    <select id="plotCount" resultType="com.owinfo.entity.BasePlot">
+        SELECT SUBSTRING(t.status,0,CHARINDEX('/',t.status))
+        status1,SUBSTRING(t.status,CHARINDEX('/',t.status)+1,LEN(t.status))
+        status2,CONVERT(varchar(100), t.issue_time, 23) createTime FROM BG_TaskBook t
+        <if test="organizer !=''">
+            INNER JOIN BG_System s ON s.is_delete='0'
+            AND s.taskbook_id=t.id
+            AND s.organizer_id=#{organizer}
+        </if>
+        WHERE t.is_delete='0'
+        <if test="competentDept !=''">
+            AND t.competent_dept LIKE ('%'+(#{competentDept}+'%'))
+        </if>
+        <if test="from !=''">
+            AND t.issue_time &gt; CONVERT(char,#{from},120)
+        </if>
+        <if test="to !=''">
+            AND t.issue_time &lt; CONVERT(char,#{to},120)
+        </if>
+        ORDER BY t.issue_time ASC
+    </select>
+    <select id="list1" resultType="com.owinfo.entity.BaseList">
+        SELECT
+        <if test="organizer ==''.toString()">
+            t.competent_dept dept
+        </if>
+        <if test="organizer !=''">
+            s.organizer_name organizer
+        </if>
+        ,COUNT(*) taskCount FROM BG_TaskBook t
+        <if test="organizer !=''">
+            INNER JOIN BG_System s ON s.is_delete='0'
+            AND s.taskbook_id=t.id
+            AND s.organizer_id=#{organizer}
+        </if>
+        WHERE t.is_delete='0'
+        <if test="competentDept !=''">
+            AND t.competent_dept LIKE ('%'+(#{competentDept}+'%'))
+        </if>
+        <if test="from !=''">
+            AND t.issue_time &gt; CONVERT(char,#{from},120)
+        </if>
+        <if test="to !=''">
+            AND t.issue_time &lt; CONVERT(char,#{to},120)
+        </if>
+        <if test="organizer ==''.toString()">
+            GROUP BY t.competent_dept
+            ORDER BY t.competent_dept ASC
+        </if>
+        <if test="organizer !=''">
+            GROUP BY s.organizer_name
+            ORDER BY s.organizer_name ASC
+        </if>
+    </select>
+
+    <select id="taskBookResult" resultType="com.owinfo.entity.TaskBookResult">
+        <!--parameterType="com.owinfo.entity.TaskBookResultParam"-->
+        SELECT TOP ${size} * FROM (SELECT ROW_NUMBER() over(order by t.id) as r,t.* FROM(
+        SELECT distinct tb.id id,tb.competent_dept competentDept,tb.issue_time issueTime,tb.project_name projectName,
+        td.details_name detailsName,td.plan_time finishTime,td.id detailId,td.version,td.status tdstatus,
+        st.Sys_Name systemName,so.Ogus_Name unitName,tb.isdetail isdetail,so.Ogus_Path path
+        from BG_TaskBook tb
+        INNER JOIN BG_TaskBook_Details td on td.taskbook_id=tb.id AND td.is_delete='0'
+        <if test="version !='' and version !=null">
+            AND td.version=#{version}
+        </if>
+
+        <if test="detailsName !='' and detailsName !=null">
+            AND td.details_name=#{detailsName}
+        </if>
+        <if test="status!='' and status==1">
+            AND td.id in
+            ( SELECT DISTINCT y.id
+            FROM STM_SystemInfo x
+            INNER JOIN BG_TaskBook_Details y
+            on x.ID=y.system_id AND y.is_delete='0' AND y.status IN ('1','2','3')
+            WHERE x.Del_Flag=0 )
+        </if>
+
+        <if test="status!='' and status==0">
+            AND td.id in
+            ( SELECT DISTINCT y.id
+            FROM STM_SystemInfo x
+            INNER JOIN BG_TaskBook_Details y
+            on x.ID=y.system_id AND y.is_delete='0' AND y.status NOT IN ('1','2','3')
+            WHERE x.Del_Flag=0 )
+        </if>
+        INNER JOIN BG_TaskBook_SystemInfo ts on ts.system_id=td.system_id AND ts.is_delete='0'
+        INNER JOIN STM_SystemInfo st on td.system_id=st.id AND st.Del_Flag=0
+        <if test="systemName !='' and systemName !=null">
+            AND st.Sys_Name=#{systemName}
+        </if>
+        INNER JOIN STM_Ogus so on st.id=so.Sys_ID AND so.Ogus_Type in ('Organizer')
+        <if test="unitName !='' and unitName !=null">
+            AND so.Ogus_Name=#{unitName}
+        </if>
+        WHERE tb.is_delete='0'
+        <if test="from !='' and from !=null">
+            AND tb.issue_time &gt;= CONVERT(char,#{from},120)
+        </if>
+        <if test="to !='' and to !=null">
+            AND tb.issue_time &lt;= CONVERT(char,#{to},120)
+        </if>
+        <if test="competentDept !='' and competentDept !=null">
+            AND tb.competent_dept LIKE ('%'+(#{competentDept}+'%'))
+        </if>
+        <if test="projectName !='' and projectName !=null">
+            AND tb.project_name LIKE ('%'+(#{projectName}+'%'))
+        </if>
+        )as t)as tt
+        WHERE r>#{page}
+    </select>
+
+    <select id="countTaskBookResult" resultType="int">
+        <!--parameterType="com.owinfo.entity.TaskBookResultParam"-->
+        SELECT COUNT(*) FROM(
+        SELECT distinct tb.id id,tb.competent_dept competentDept,tb.issue_time issueTime,tb.project_name projectName,
+        td.details_name detailsName,td.plan_time finishTime,td.id detailId,td.version,td.status tdstatus,
+        st.Sys_Name systemName,so.Ogus_Name unitName,tb.isdetail isdetail,so.Ogus_Path path
+        from BG_TaskBook tb
+        INNER JOIN BG_TaskBook_Details td on td.taskbook_id=tb.id AND td.is_delete='0'
+        <if test="version !='' and version !=null">
+            AND td.version=#{version}
+        </if>
+
+        <if test="detailsName !='' and detailsName !=null">
+            AND td.details_name=#{detailsName}
+        </if>
+        <if test="status!='' and status==1">
+            AND td.id in
+            ( SELECT DISTINCT y.id
+            FROM STM_SystemInfo x
+            INNER JOIN BG_TaskBook_Details y
+            on x.ID=y.system_id AND y.is_delete='0' AND y.status IN ('1','2','3')
+            WHERE x.Del_Flag=0 )
+        </if>
+
+        <if test="status!='' and status==0">
+            AND td.id in
+            ( SELECT DISTINCT y.id
+            FROM STM_SystemInfo x
+            INNER JOIN BG_TaskBook_Details y
+            on x.ID=y.system_id AND y.is_delete='0' AND y.status NOT IN ('1','2','3')
+            WHERE x.Del_Flag=0 )
+        </if>
+        INNER JOIN BG_TaskBook_SystemInfo ts on ts.system_id=td.system_id AND ts.is_delete='0'
+        INNER JOIN STM_SystemInfo st on td.system_id=st.id AND st.Del_Flag=0
+        <if test="systemName !='' and systemName !=null">
+            AND st.Sys_Name=#{systemName}
+        </if>
+        INNER JOIN STM_Ogus so on st.id=so.Sys_ID AND so.Ogus_Type in ('Organizer')
+        <if test="unitName !='' and unitName !=null">
+            AND so.Ogus_Name=#{unitName}
+        </if>
+        WHERE tb.is_delete='0'
+        <if test="from !='' and from !=null">
+            AND tb.issue_time &gt;= CONVERT(char,#{from},120)
+        </if>
+        <if test="to !='' and to !=null">
+            AND tb.issue_time &lt;= CONVERT(char,#{to},120)
+        </if>
+        <if test="competentDept !='' and competentDept !=null">
+            AND tb.competent_dept LIKE ('%'+(#{competentDept}+'%'))
+        </if>
+        <if test="projectName !='' and projectName !=null">
+            AND tb.project_name LIKE ('%'+(#{projectName}+'%'))
+        </if>
+        )as t
+    </select>
+
+    <select id="selectTaskbookByProjectName" resultType="String">
+      SELECT DISTINCT tb.project_name FROM BG_TaskBook tb
+      WHERE tb.project_name LIKE ('%'+(#{projectName}+'%'))
+    </select>
+
+</mapper>

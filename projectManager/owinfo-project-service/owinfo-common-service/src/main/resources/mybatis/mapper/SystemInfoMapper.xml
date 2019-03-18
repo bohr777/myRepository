@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.owinfo.dao.SystemInfoMapper" >
+  <sql id="table">BG_System_Info</sql>
+  <resultMap id="BaseResultMap" type="com.owinfo.entity.SystemInfo" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="system_name" property="systemName" jdbcType="VARCHAR" />
+    <result column="organizer_id" property="organizerId" jdbcType="VARCHAR" />
+    <result column="organizer_name" property="organizerName" jdbcType="VARCHAR" />
+    <result column="organizer_fullpath" property="organizerFullpath" jdbcType="VARCHAR" />
+    <result column="dept_id" property="deptId" jdbcType="VARCHAR" />
+    <result column="dept_name" property="deptName" jdbcType="VARCHAR" />
+    <result column="dept_fullpath" property="deptFullpath" jdbcType="VARCHAR" />
+    <result column="network" property="network" jdbcType="VARCHAR" />
+    <result column="founder_id" property="founderId" jdbcType="VARCHAR" />
+    <result column="founder_name" property="founderName" jdbcType="VARCHAR" />
+    <result column="founder_fullpath" property="founderFullpath" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="final_modifier_id" property="finalModifierId" jdbcType="VARCHAR" />
+    <result column="final_modifier_name" property="finalModifierName" jdbcType="VARCHAR" />
+    <result column="final_modifier_fullpath" property="finalModifierFullpath" jdbcType="VARCHAR" />
+    <result column="final_modify" property="finalModify" jdbcType="TIMESTAMP" />
+    <result column="manager_id" property="managerId" jdbcType="VARCHAR" />
+    <result column="manager_name" property="managerName" jdbcType="VARCHAR" />
+    <result column="manager_fullpath" property="managerFullpath" jdbcType="VARCHAR" />
+    <result column="is_delete" property="isDelete" jdbcType="CHAR" />
+  </resultMap>
+  <select id="listForAll" resultMap="BaseResultMap">
+    SELECT * FROM BG_System_Info WHERE is_delete='0'
+    <if test="systemName != null and systemName !=''">
+      AND system_name LIKE ('%'+(#{systemName}+'%'))
+    </if>
+    ORDER BY final_modify DESC
+  </select>
+  <update id="deleteById1">
+    UPDATE BG_System_Info SET is_delete='1' WHERE id=#{id}
+  </update>
+  <select id="getByName" resultMap="BaseResultMap">
+    SELECT TOP 10 * FROM BG_System_Info WHERE is_delete='0'
+    <if test="name != null and name !=''">
+      AND system_name LIKE ('%'+(#{name}+'%'))
+    </if>
+  </select>
+  <select id="getByDept" resultMap="BaseResultMap">
+    SELECT * FROM BG_System_Info WHERE is_delete='0'
+    AND organizer_fullpath=#{parent}
+  </select>
+  <select id="listByName" resultMap="BaseResultMap">
+    SELECT TOP 10 * FROM BG_System_Info WHERE is_delete='0'
+    AND system_name LIKE ('%'+(#{name}+'%'))
+    ORDER BY organizer_fullpath
+  </select>
+ <!-- //根据系统名称查询系统，判断是否重复-->
+  <select id="findSystemBySystemName" resultType="Integer">
+    SELECT count(*) FROM BG_System_Info WHERE is_delete='0'
+    AND system_name=#{systemName}
+  </select>
+
+</mapper>

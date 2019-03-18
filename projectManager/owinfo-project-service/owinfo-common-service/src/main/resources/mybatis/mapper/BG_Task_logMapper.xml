@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.owinfo.dao.BG_Task_logMapper">
+    <sql id="table">BG_Task_Log</sql>
+    <resultMap id="BaseBG_Task_Log" type="com.owinfo.entity.BG_Task_Log">
+        <id column="GUID" property="guid" jdbcType="VARCHAR"/>
+        <result column="TaskID" property="taskid" jdbcType="VARCHAR"/>
+        <result column="Content" property="content" jdbcType="VARCHAR"/>
+        <result column="Log_Date" property="logDate" jdbcType="TIMESTAMP"/>
+        <result column="Create_Time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="Content_Pertcent" property="contentpertcent" jdbcType="VARCHAR"/>
+        <result column="UserID" property="userid" jdbcType="VARCHAR"/>
+        <result column="UserName" property="username" jdbcType="VARCHAR"/>
+        <result column="UserFullPath" property="userfullpath" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="findRecord" resultMap="BaseBG_Task_Log">
+        SELECT * FROM BG_Task_Log where GUID = #{guid};
+    </select>
+
+    <select id="findTaskId" resultMap="BaseBG_Task_Log">
+        SELECT * FROM BG_Task_Log where TaskID = #{taskId} ;
+    </select>
+
+    <insert id="insertSave">
+        insert into BG_Task_Log (GUID, TaskID,
+        Log_Date, Create_Time,  Content,Content_Pertcent,
+        UserID,UserName, UserFullPath)
+        values (#{guid,jdbcType=VARCHAR}, #{taskid,jdbcType=INTEGER}, #{logDate,jdbcType=TIMESTAMP},
+         #{createTime,jdbcType=TIMESTAMP},
+         #{content,jdbcType=VARCHAR}, #{contentpertcent,jdbcType=VARCHAR},
+        #{userid,jdbcType=INTEGER},#{username,jdbcType=VARCHAR}, #{userfullpath,jdbcType=VARCHAR})
+    </insert>
+
+<update id="updateByGUID">
+UPDATE BG_Task_Log SET
+         TaskID = #{taskid,jdbcType=INTEGER},
+         Log_Date = #{logDate,jdbcType=TIMESTAMP},
+         Content = #{content,jdbcType=VARCHAR},
+         Content_Pertcent = #{contentpertcent,jdbcType=VARCHAR},
+         UserID = #{userid,jdbcType=INTEGER},
+         UserName = #{username,jdbcType=VARCHAR},
+         UserFullPath = #{userfullpath,jdbcType=VARCHAR}
+    WHERE GUID=#{guid}
+</update>
+</mapper>

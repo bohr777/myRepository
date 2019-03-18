@@ -1,0 +1,71 @@
+#date 11.30
+#v1 liyue
+server:
+  port: 8166
+  tomcat:
+    uri-encoding: UTF-8
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.cloud.client.ipAddress}:${spring.application.instance_id:${server.port}}
+    lease-renewal-interval-in-seconds: 5
+
+spring:
+  application:
+    name: owinfo-project-activiti
+
+  jackson:
+    dateFormat: yyyy-MM-dd HH:mm:ss
+    jodaDateTimeFormat: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+  datasource:
+      url: jdbc:sqlserver://192.168.6.213:1433;database=aaa
+      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      username: sa
+      password: 1qaz!QAZ
+#      url: jdbc:sqlserver://192.168.6.213\SQL2008;database=cpm2018
+#      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+#      username: sa
+#      password: 1qaz!QAZ
+#      url: jdbc:sqlserver://223.223.199.22:2221;database=aaa
+#      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+#      username: sa
+#      password: 1qaz!QAZ
+#      url: jdbc:sqlserver://10.63.41.138:1433;database=cpm2018
+#      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+#      username: cpm20182
+#      password: cpm2018
+#      url: jdbc:sqlserver://10.63.41.138:1433;database=cpm2018
+#      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+#      username: cpm20182
+#      password: cpm2018
+      type: com.alibaba.druid.pool.DruidDataSource
+      maxActive: 10
+      initialSize: 1
+      maxWait: 120000
+      minIdle: 1
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: select 'x'
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+
+  activiti:
+    check-process-definitions: false
+    history-level: full
+
+#logging.level.com.owinfo: DEBUG
+
+logging:
+  file: E:/logs/project_manager/activiti_log.log
+  level:
+    org.springfromework.web: debug
+    org.hibernate: error

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.owinfo.dao.STMOgusMapper" >
+  <resultMap id="BaseResultMap" type="com.owinfo.entity.STMOgus" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="Sys_ID" property="sysId" jdbcType="VARCHAR" />
+    <result column="Ogus_Type" property="ogusType" jdbcType="VARCHAR" />
+    <result column="Ogus_ID" property="ogusId" jdbcType="VARCHAR" />
+    <result column="Ogus_Name" property="ogusName" jdbcType="NVARCHAR" />
+    <result column="Ogus_Path" property="ogusPath" jdbcType="NVARCHAR" />
+    <result column="Parent_Dept_ID" property="parentDeptId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, Sys_ID, Ogus_Type, Ogus_ID, Ogus_Name, Ogus_Path, Parent_Dept_ID
+  </sql>
+  <!--<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >-->
+    <!--select -->
+    <!--<include refid="Base_Column_List" />-->
+    <!--from STM_Ogus-->
+    <!--where ID = #{id,jdbcType=VARCHAR}-->
+  <!--</select>-->
+  <!--<delete id="deleteByPrimaryKey" parameterType="java.lang.String" >-->
+    <!--delete from STM_Ogus-->
+    <!--where ID = #{id,jdbcType=VARCHAR}-->
+  <!--</delete>-->
+  <!--<insert id="insert" parameterType="com.owinfo.entity.STMOgus" >-->
+    <!--insert into STM_Ogus (ID, Sys_ID, Ogus_Type, -->
+      <!--Ogus_ID, Ogus_Name, Ogus_Path, -->
+      <!--Parent_Dept_ID)-->
+    <!--values (#{id,jdbcType=VARCHAR}, #{sysId,jdbcType=VARCHAR}, #{ogusType,jdbcType=VARCHAR}, -->
+      <!--#{ogusId,jdbcType=VARCHAR}, #{ogusName,jdbcType=NVARCHAR}, #{ogusPath,jdbcType=NVARCHAR}, -->
+      <!--#{parentDeptId,jdbcType=VARCHAR})-->
+  <!--</insert>-->
+  <!--<insert id="insertSelective" parameterType="com.owinfo.entity.STMOgus" >-->
+    <!--insert into STM_Ogus-->
+    <!--<trim prefix="(" suffix=")" suffixOverrides="," >-->
+      <!--<if test="id != null" >-->
+        <!--ID,-->
+      <!--</if>-->
+      <!--<if test="sysId != null" >-->
+        <!--Sys_ID,-->
+      <!--</if>-->
+      <!--<if test="ogusType != null" >-->
+        <!--Ogus_Type,-->
+      <!--</if>-->
+      <!--<if test="ogusId != null" >-->
+        <!--Ogus_ID,-->
+      <!--</if>-->
+      <!--<if test="ogusName != null" >-->
+        <!--Ogus_Name,-->
+      <!--</if>-->
+      <!--<if test="ogusPath != null" >-->
+        <!--Ogus_Path,-->
+      <!--</if>-->
+      <!--<if test="parentDeptId != null" >-->
+        <!--Parent_Dept_ID,-->
+      <!--</if>-->
+    <!--</trim>-->
+    <!--<trim prefix="values (" suffix=")" suffixOverrides="," >-->
+      <!--<if test="id != null" >-->
+        <!--#{id,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="sysId != null" >-->
+        <!--#{sysId,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="ogusType != null" >-->
+        <!--#{ogusType,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="ogusId != null" >-->
+        <!--#{ogusId,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="ogusName != null" >-->
+        <!--#{ogusName,jdbcType=NVARCHAR},-->
+      <!--</if>-->
+      <!--<if test="ogusPath != null" >-->
+        <!--#{ogusPath,jdbcType=NVARCHAR},-->
+      <!--</if>-->
+      <!--<if test="parentDeptId != null" >-->
+        <!--#{parentDeptId,jdbcType=VARCHAR},-->
+      <!--</if>-->
+    <!--</trim>-->
+  <!--</insert>-->
+  <!--<update id="updateByPrimaryKeySelective" parameterType="com.owinfo.entity.STMOgus" >-->
+    <!--update STM_Ogus-->
+    <!--<set >-->
+      <!--<if test="sysId != null" >-->
+        <!--Sys_ID = #{sysId,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="ogusType != null" >-->
+        <!--Ogus_Type = #{ogusType,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="ogusId != null" >-->
+        <!--Ogus_ID = #{ogusId,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="ogusName != null" >-->
+        <!--Ogus_Name = #{ogusName,jdbcType=NVARCHAR},-->
+      <!--</if>-->
+      <!--<if test="ogusPath != null" >-->
+        <!--Ogus_Path = #{ogusPath,jdbcType=NVARCHAR},-->
+      <!--</if>-->
+      <!--<if test="parentDeptId != null" >-->
+        <!--Parent_Dept_ID = #{parentDeptId,jdbcType=VARCHAR},-->
+      <!--</if>-->
+    <!--</set>-->
+    <!--where ID = #{id,jdbcType=VARCHAR}-->
+  <!--</update>-->
+  <!--<update id="updateByPrimaryKey" parameterType="com.owinfo.entity.STMOgus" >-->
+    <!--update STM_Ogus-->
+    <!--set Sys_ID = #{sysId,jdbcType=VARCHAR},-->
+      <!--Ogus_Type = #{ogusType,jdbcType=VARCHAR},-->
+      <!--Ogus_ID = #{ogusId,jdbcType=VARCHAR},-->
+      <!--Ogus_Name = #{ogusName,jdbcType=NVARCHAR},-->
+      <!--Ogus_Path = #{ogusPath,jdbcType=NVARCHAR},-->
+      <!--Parent_Dept_ID = #{parentDeptId,jdbcType=VARCHAR}-->
+    <!--where ID = #{id,jdbcType=VARCHAR}-->
+  <!--</update>-->
+</mapper>

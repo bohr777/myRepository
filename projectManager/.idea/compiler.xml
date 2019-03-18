@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="owinfo-common-core" />
+        <module name="owinfo-common-eureka" />
+        <module name="owinfo-common-service" />
+        <module name="owinfo-common-web" />
+        <module name="owinfo-common-zuul" />
+        <module name="owinfo-project-activity" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="owinfo-common-core" target="1.8" />
+      <module name="owinfo-common-eureka" target="1.8" />
+      <module name="owinfo-common-service" target="1.8" />
+      <module name="owinfo-common-web" target="1.8" />
+      <module name="owinfo-common-zuul" target="1.8" />
+      <module name="owinfo-project-activity" target="1.8" />
+      <module name="owinfo-project-server" target="1.8" />
+      <module name="owinfo-project-service" target="1.8" />
+      <module name="owinfo-project-web" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="h4a-sdk-1.0.4">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/owinfo-common-web/lib/h4a-sdk-1.0.4.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

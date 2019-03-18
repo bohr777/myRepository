@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/owinfo-project-service/owinfo-common-core/owinfo-common-core.iml" filepath="$PROJECT_DIR$/owinfo-project-service/owinfo-common-core/owinfo-common-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/owinfo-project-server/owinfo-common-eureka/owinfo-common-eureka.iml" filepath="$PROJECT_DIR$/owinfo-project-server/owinfo-common-eureka/owinfo-common-eureka.iml" />
+      <module fileurl="file://$PROJECT_DIR$/owinfo-project-service/owinfo-common-service/owinfo-common-service.iml" filepath="$PROJECT_DIR$/owinfo-project-service/owinfo-common-service/owinfo-common-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/owinfo-project-web/owinfo-common-web/owinfo-common-web.iml" filepath="$PROJECT_DIR$/owinfo-project-web/owinfo-common-web/owinfo-common-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/owinfo-project-server/owinfo-common-zuul/owinfo-common-zuul.iml" filepath="$PROJECT_DIR$/owinfo-project-server/owinfo-common-zuul/owinfo-common-zuul.iml" />
+      <module fileurl="file://$PROJECT_DIR$/owinfo-project-activiti/owinfo-project-activity/owinfo-project-activity.iml" filepath="$PROJECT_DIR$/owinfo-project-activiti/owinfo-project-activity/owinfo-project-activity.iml" />
+      <module fileurl="file://$PROJECT_DIR$/owinfo-project-server/owinfo-project-server.iml" filepath="$PROJECT_DIR$/owinfo-project-server/owinfo-project-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/owinfo-project-service/owinfo-project-service.iml" filepath="$PROJECT_DIR$/owinfo-project-service/owinfo-project-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/owinfo-project-web/owinfo-project-web.iml" filepath="$PROJECT_DIR$/owinfo-project-web/owinfo-project-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/owinfo-springcloud.iml" filepath="$PROJECT_DIR$/.idea/owinfo-springcloud.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.owinfo.dao.SetMapper">
+<resultMap id="SetResultMap" type="com.owinfo.entity.SetEntity">
+  <id column="user_id" property="userId" jdbcType="VARCHAR" />
+  <result column="shu" property="shu" jdbcType="NVARCHAR" />
+  <result column="guan" property="guan" jdbcType="NVARCHAR" />
+  <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  <result column="founder_id" property="founderId" jdbcType="VARCHAR" />
+  <result column="founder_name" property="founderName" jdbcType="VARCHAR" />
+  <result column="founder_fullpath" property="founderFullpath" jdbcType="VARCHAR" />
+  <result column="final_modify" property="finalModify" jdbcType="TIMESTAMP" />
+  <result column="final_modifier_id" property="finalModifierId" jdbcType="VARCHAR" />
+  <result column="final_modifier_name" property="finalModifierName" jdbcType="VARCHAR" />
+  <result column="final_modifier_fullpath" property="finalModifierFullpath" jdbcType="VARCHAR" />
+  <result column="unit_id" property="unitId" jdbcType="VARCHAR" />
+</resultMap>
+
+
+
+  <select id="getSetUpById" resultMap="SetResultMap">
+    SELECT * FROM BG_Setup WHERE user_id = #{userId}
+  </select>
+  <insert id="insertSetUp" >
+    insert into BG_Setup (user_id, shu, guan,
+    create_time, founder_id, founder_name,
+    founder_fullpath, final_modify, final_modifier_id,
+    final_modifier_name, final_modifier_fullpath
+    )
+    values (#{userId,jdbcType=VARCHAR}, #{shu,jdbcType=VARCHAR}, #{guan,jdbcType=VARCHAR},
+    #{createTime,jdbcType=TIMESTAMP}, #{founderId,jdbcType=VARCHAR}, #{founderName,jdbcType=VARCHAR},
+    #{founderFullpath,jdbcType=VARCHAR}, #{finalModify,jdbcType=TIMESTAMP}, #{finalModifierId,jdbcType=VARCHAR},
+    #{finalModifierName,jdbcType=VARCHAR}, #{finalModifierFullpath,jdbcType=VARCHAR}
+    )
+  </insert>
+
+
+</mapper>

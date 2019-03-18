@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/owinfo-common-eureka/owinfo-common-eureka.iml" filepath="$PROJECT_DIR$/owinfo-common-eureka/owinfo-common-eureka.iml" />
+      <module fileurl="file://$PROJECT_DIR$/owinfo-common-zuul/owinfo-common-zuul.iml" filepath="$PROJECT_DIR$/owinfo-common-zuul/owinfo-common-zuul.iml" />
+      <module fileurl="file://$PROJECT_DIR$/owinfo-project-server.iml" filepath="$PROJECT_DIR$/owinfo-project-server.iml" />
+    </modules>
+  </component>
+</project>

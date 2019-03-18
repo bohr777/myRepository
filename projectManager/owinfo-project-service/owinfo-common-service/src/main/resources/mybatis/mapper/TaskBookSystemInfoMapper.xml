@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.owinfo.dao.TaskBookSystemInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.owinfo.entity.TaskBookSystemInfo" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="taskbook_id" property="taskbookId" jdbcType="VARCHAR" />
+    <result column="system_id" property="systemId" jdbcType="VARCHAR" />
+    <result column="is_delete" property="isDelete" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, taskbook_id, system_id,is_delete
+  </sql>
+  <!--<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >-->
+    <!--select -->
+    <!--<include refid="Base_Column_List" />-->
+    <!--from BG_TaskBook_SystemInfo-->
+    <!--where id = #{id,jdbcType=VARCHAR}-->
+  <!--</select>-->
+  <!--<delete id="deleteByPrimaryKey" parameterType="java.lang.String" >-->
+    <!--delete from BG_TaskBook_SystemInfo-->
+    <!--where id = #{id,jdbcType=VARCHAR}-->
+  <!--</delete>-->
+  <!--<insert id="insert" parameterType="com.owinfo.entity.TaskBookSystemInfo" >-->
+    <!--insert into BG_TaskBook_SystemInfo (id, taskbook_id, system_id-->
+      <!--)-->
+    <!--values (#{id,jdbcType=VARCHAR}, #{taskbookId,jdbcType=VARCHAR}, #{systemId,jdbcType=VARCHAR}-->
+      <!--)-->
+  <!--</insert>-->
+  <!--<insert id="insertSelective" parameterType="com.owinfo.entity.TaskBookSystemInfo" >-->
+    <!--insert into BG_TaskBook_SystemInfo-->
+    <!--<trim prefix="(" suffix=")" suffixOverrides="," >-->
+      <!--<if test="id != null" >-->
+        <!--id,-->
+      <!--</if>-->
+      <!--<if test="taskbookId != null" >-->
+        <!--taskbook_id,-->
+      <!--</if>-->
+      <!--<if test="systemId != null" >-->
+        <!--system_id,-->
+      <!--</if>-->
+    <!--</trim>-->
+    <!--<trim prefix="values (" suffix=")" suffixOverrides="," >-->
+      <!--<if test="id != null" >-->
+        <!--#{id,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="taskbookId != null" >-->
+        <!--#{taskbookId,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="systemId != null" >-->
+        <!--#{systemId,jdbcType=VARCHAR},-->
+      <!--</if>-->
+    <!--</trim>-->
+  <!--</insert>-->
+  <!--<update id="updateByPrimaryKeySelective" parameterType="com.owinfo.entity.TaskBookSystemInfo" >-->
+    <!--update BG_TaskBook_SystemInfo-->
+    <!--<set >-->
+      <!--<if test="taskbookId != null" >-->
+        <!--taskbook_id = #{taskbookId,jdbcType=VARCHAR},-->
+      <!--</if>-->
+      <!--<if test="systemId != null" >-->
+        <!--system_id = #{systemId,jdbcType=VARCHAR},-->
+      <!--</if>-->
+    <!--</set>-->
+    <!--where id = #{id,jdbcType=VARCHAR}-->
+  <!--</update>-->
+  <!--<update id="updateByPrimaryKey" parameterType="com.owinfo.entity.TaskBookSystemInfo" >-->
+    <!--update BG_TaskBook_SystemInfo-->
+    <!--set taskbook_id = #{taskbookId,jdbcType=VARCHAR},-->
+      <!--system_id = #{systemId,jdbcType=VARCHAR}-->
+    <!--where id = #{id,jdbcType=VARCHAR}-->
+  <!--</update>-->
+
+  <update id="deleteByTaskBookId" parameterType="com.owinfo.entity.TaskBookSystemInfo" >
+  update BG_TaskBook_SystemInfo
+  set is_delete = '0'
+  where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <!--<delete id="deleteByTaskBookId" parameterType="java.lang.String" >-->
+    <!--delete from BG_TaskBook_SystemInfo-->
+    <!--where taskbook_id = #{id,jdbcType=VARCHAR}-->
+  <!--</delete>-->
+
+  <select id="selectSystemByTaskbookId" resultMap="BaseResultMap">
+    SELECT * FROM BG_TaskBook_SystemInfo ts
+    INNER JOIN STM_SystemInfo s on s.id=ts.system_id
+    where ts.taskbook_id=#{taskbookId} AND ts.is_delete='0'
+  </select>
+
+  <select id="selectCountById" resultType="Integer">
+    SELECT count(*) FROM BG_TaskBook_SystemInfo WHERE taskbook_id=#{taskbookId} AND system_id=#{systemId} AND is_delete='0'
+  </select>
+
+</mapper>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.owinfo.dao.BaseUserMapper">
+<resultMap id="BaseResultMap" type="com.owinfo.entity.BaseUserEntity">
+  <id column="GUID" property="guid" jdbcType="NVARCHAR" />
+  <id column="DEPT_GUID" property="deptGuid" jdbcType="NVARCHAR" />
+  <result column="TOP_DEPT_GUID" property="topDeptGuid" jdbcType="NVARCHAR" />
+  <result column="PARENT_TOP_DEPT_GUID" property="parentTopDeptGuid" jdbcType="NVARCHAR" />
+  <result column="USER_NAME" property="userName" jdbcType="NVARCHAR" />
+  <result column="GLOBAL_SORT" property="globalSort" jdbcType="NVARCHAR" />
+  <result column="ALL_PATH_NAME" property="allPathName" jdbcType="NVARCHAR" />
+  <result column="CARD_NO" property="cardNo" jdbcType="NCHAR" />
+</resultMap>
+
+  <!--<sql id="condition_sql">-->
+    <!--<if test="userName != null and userName!=''">-->
+      <!--USER_NAME like CONCAT(CONCAT('%', #{userName}),'%') AND-->
+    <!--</if>-->
+    <!--1=1-->
+  <!--</sql>-->
+  <!-- 定义返回列 -->
+  <!--<sql id="Base_Column_List">-->
+    <!--GUID, DISPLAY_NAME, ALL_PATH_NAME-->
+  <!--</sql>-->
+  <select id="selectUserByInfo" resultMap="BaseResultMap">
+    SELECT TOP 10 * FROM PARAM_USER_BASE WHERE USER_NAME LIKE ('%'+(#{userName}+'%'))
+  </select>
+  <select id="getByDept" resultMap="BaseResultMap">
+    SELECT * FROM PARAM_USER_BASE WHERE ALL_PATH_NAME LIKE (#{parent}+'\%') AND ALL_PATH_NAME NOT LIKE (#{parent}+'\%\')
+  </select>
+  <select id="listByName" resultMap="BaseResultMap">
+    SELECT TOP 10 * FROM PARAM_USER_BASE WHERE USER_NAME LIKE ('%'+(#{name}+'%')) ORDER BY ALL_PATH_NAME
+  </select>
+
+  <select id="selectUserByGUID" resultMap="BaseResultMap">
+    SELECT USER_NAME FROM PARAM_USER_BASE WHERE GUID=#{id}
+  </select>
+
+  <select id="selectUserPathByGUID" resultMap="BaseResultMap">
+    SELECT * FROM PARAM_USER_BASE WHERE GUID=#{id}
+  </select>
+
+  <select id="selectUserById" resultMap="BaseResultMap">
+    SELECT * FROM PARAM_USER_BASE WHERE GUID=#{id}
+  </select>
+</mapper>

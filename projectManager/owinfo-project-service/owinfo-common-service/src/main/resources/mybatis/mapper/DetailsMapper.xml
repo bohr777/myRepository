@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.owinfo.dao.DetailsMapper">
+    <sql id="table">BG_TaskBook_Details</sql>
+    <resultMap id="BaseResultMap" type="com.owinfo.entity.Details">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="system_name" jdbcType="VARCHAR" property="systemName"/>
+        <result column="serial_number" jdbcType="VARCHAR" property="serialNumber"/>
+        <result column="details_number" jdbcType="VARCHAR" property="detailsNumber"/>
+        <result column="details_name" jdbcType="VARCHAR" property="detailsName"/>
+        <result column="plan_time" jdbcType="TIMESTAMP" property="planTime"/>
+        <result column="importance" jdbcType="CHAR" property="importance"/>
+        <result column="status" jdbcType="CHAR" property="status"/>
+        <result column="version" jdbcType="VARCHAR" property="version"/>
+        <result column="unit_name" jdbcType="VARCHAR" property="unitName"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="founder_id" jdbcType="VARCHAR" property="founderId"/>
+        <result column="founder_name" jdbcType="VARCHAR" property="founderName"/>
+        <result column="founder_fullpath" jdbcType="VARCHAR" property="founderFullpath"/>
+        <result column="final_modify" jdbcType="TIMESTAMP" property="finalModify"/>
+        <result column="final_modifier_id" jdbcType="VARCHAR" property="finalModifierId"/>
+        <result column="final_modifier_name" jdbcType="VARCHAR" property="finalModifierName"/>
+        <result column="final_modifier_fullpath" jdbcType="VARCHAR" property="finalModifierFullpath"/>
+        <result column="is_delete" jdbcType="CHAR" property="isDelete"/>
+        <result column="taskbook_id" jdbcType="VARCHAR" property="taskbookId"/>
+        <result column="system_id" jdbcType="VARCHAR" property="systemId"/>
+        <result column="finish_time" jdbcType="TIMESTAMP" property="finishTime"/>
+        <result column="frequency" jdbcType="INTEGER" property="frequency"/>
+    </resultMap>
+    <update id="deleteById1">
+    UPDATE BG_TaskBook_Details SET is_delete='1' WHERE id=#{id}
+  </update>
+    <select id="listForAll" resultMap="BaseResultMap">
+    SELECT * FROM BG_TaskBook_Details WHERE is_delete='0'
+  </select>
+    <select id="listByTaskBookId" resultMap="BaseResultMap">
+    SELECT * FROM BG_TaskBook_Details WHERE is_delete='0' AND taskbook_id=#{taskbookId}
+  </select>
+    <select id="listBySystemId" resultMap="BaseResultMap">
+    SELECT * FROM BG_TaskBook_Details WHERE system_id=#{systemId} AND is_delete='0'
+  </select>
+    <update id="deleteByTaskBookId">
+    UPDATE BG_TaskBook_Details SET is_delete='1' WHERE taskbook_id=#{taskbookId}
+  </update>
+    <update id="deleteBySystemId">
+    UPDATE BG_TaskBook_Details SET is_delete='1' WHERE system_id=#{systemId}
+  </update>
+    <select id="hasId" resultType="java.lang.String">
+    SELECT id FROM BG_TaskBook_Details WHERE id=#{id} AND is_delete='0'
+  </select>
+    <select id="numByStatus" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM BG_TaskBook_Details WHERE is_delete='0' AND taskbook_id=#{taskbookId}
+        <if test="status == '0'.toString()">
+            AND status LIKE '%0%'
+        </if>
+        <if test="status == '1'.toString()">
+            AND status NOT LIKE '%0%'
+        </if>
+    </select>
+    <select id="checkNum" resultType="java.lang.String">
+    SELECT details_number FROM BG_TaskBook_Details WHERE is_delete='0' AND details_number=#{detailsNum}
+  </select>
+    <select id="frequencyBySystemId" resultType="java.lang.Integer">
+    SELECT SUM(frequency) FROM BG_TaskBook_Details WHERE is_delete='0' AND system_id=#{systemId}
+  </select>
+    <select id="frequencyById" resultType="java.lang.Integer">
+    SELECT frequency FROM BG_TaskBook_Details WHERE is_delete='0' AND id=#{id}
+  </select>
+    <select id="plotCount" resultType="com.owinfo.entity.BasePlot">
+        SELECT d.status status1,CONVERT(varchar(100), t.issue_time, 23) createTime FROM BG_TaskBook_Details d
+        INNER JOIN BG_TaskBook t ON t.is_delete='0'
+        AND d.taskbook_id=t.id
+        <if test="from !=''">
+            AND t.issue_time &gt; CONVERT(char,#{from},120)
+        </if>
+        <if test="to !=''">
+            AND t.issue_time &lt; CONVERT(char,#{to},120)
+        </if>
+        <if test="competentDept !=''">
+            AND t.competent_dept LIKE ('%'+(#{competentDept}+'%'))
+        </if>
+        <if test="organizer !=''">
+            INNER JOIN BG_System s ON s.is_delete='0'
+            AND s.taskbook_id=t.id
+            AND s.organizer_id=#{organizer}
+        </if>
+        WHERE d.is_delete='0'
+        ORDER BY t.issue_time ASC
+    </select>
+    <select id="list1" resultType="com.owinfo.entity.BaseList">
+        SELECT
+        <if test="organizer ==''.toString()">
+            t.competent_dept dept
+        </if>
+        <if test="organizer !=''">
+            s.organizer_name organizer
+        </if>
+        ,COUNT(*) detailCount FROM BG_TaskBook_Details d
+        INNER JOIN BG_TaskBook t ON t.is_delete='0'
+        AND d.taskbook_id=t.id
+        <if test="from !=''">
+            AND t.issue_time &gt; CONVERT(char,#{from},120)
+        </if>
+        <if test="to !=''">
+            AND t.issue_time &lt; CONVERT(char,#{to},120)
+        </if>
+        <if test="competentDept !=''">
+            AND t.competent_dept LIKE ('%'+(#{competentDept}+'%'))
+        </if>
+        <if test="organizer !=''">
+            INNER JOIN BG_System s ON s.is_delete='0'
+            AND s.taskbook_id=t.id
+            AND s.organizer_id=#{organizer}
+        </if>
+        WHERE d.is_delete='0'
+        <if test="organizer ==''.toString()">
+            GROUP BY t.competent_dept
+            ORDER BY t.competent_dept ASC
+        </if>
+        <if test="organizer !=''">
+            GROUP BY s.organizer_name
+            ORDER BY s.organizer_name ASC
+        </if>
+    </select>
+    <!-- 根据systemName查询该系统的总条数-->
+    <select id="findSystemCountBySystemName" resultType="Integer">
+        SELECT count(*) FROM BG_TaskBook_Details WHERE system_name=#{systemName} AND is_delete='0'
+    </select>
+
+    <select id="findDetailsLikeDetailsName" resultMap="BaseResultMap">
+        SELECT DISTINCT TOP 10 details_name from BG_TaskBook_Details WHERE details_name LIKE ('%'+(#{detailsName}+'%')) AND is_delete='0'
+    </select>
+
+    <select id="findDetailsLikeVersion" resultType="map">
+        SELECT DISTINCT TOP 10 version from BG_TaskBook_Details WHERE version LIKE ('%'+(#{version}+'%')) AND is_delete='0'
+    </select>
+
+    <select id="findDetailByDetailId" resultMap="BaseResultMap">
+        SELECT  * FROM BG_TaskBook_Details WHERE id=#{id}
+    </select>
+
+    <select id="findDetailByTaskbookId" resultMap="BaseResultMap">
+        SELECT  * FROM BG_TaskBook_Details WHERE taskbook_id=#{taskbookId}
+    </select>
+</mapper>

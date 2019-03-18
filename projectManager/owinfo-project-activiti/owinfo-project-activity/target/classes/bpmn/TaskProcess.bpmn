@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://www.activiti.org/test" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" expressionLanguage="http://www.w3.org/1999/XPath" id="m1548386741587" name="" targetNamespace="http://www.activiti.org/test" typeLanguage="http://www.w3.org/2001/XMLSchema">
+  <process id="TaskBookProcess" isClosed="false" isExecutable="true" name="任务书流程" processType="None">
+    <startEvent id="start" name="开始"/>
+    <userTask activiti:exclusive="true" id="TaskIssued" name="任务书负责人"/>
+    <sequenceFlow id="flow1" name="流程开始" sourceRef="start" targetRef="TaskIssued"/>
+    <exclusiveGateway gatewayDirection="Unspecified" id="taskGateway" name="任务书网关"/>
+    <sequenceFlow id="flow3" sourceRef="TaskIssued" targetRef="taskGateway"/>
+    <userTask activiti:exclusive="true" id="taskBookSiZhang" name="司长审批(任务书)"/>
+    <endEvent id="end" name="结束"/>
+    <sequenceFlow id="flow16" name="任务书审批结果" sourceRef="taskBookSZGateway" targetRef="TaskIssued">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${taskBookSZExamine == 'true'}]]></conditionExpression>
+    </sequenceFlow>
+    <userTask activiti:exclusive="true" id="taskBookChuZhang" name="处长审批(任务书)"/>
+    <sequenceFlow id="flow19" name="任务书审核" sourceRef="taskGateway" targetRef="taskBookChuZhang">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${taskStatus == 'examine'}]]></conditionExpression>
+    </sequenceFlow>
+    <exclusiveGateway gatewayDirection="Unspecified" id="taskBookCZGateway" name="任务书处长审核网关"/>
+    <sequenceFlow id="flow24" sourceRef="taskBookChuZhang" targetRef="taskBookCZGateway"/>
+    <sequenceFlow id="flow25" name="审核不通过" sourceRef="taskBookCZGateway" targetRef="TaskIssued">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${taskBookCZExamine == 'false'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow26" name="审核通过" sourceRef="taskBookCZGateway" targetRef="taskBookSiZhang">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${taskBookCZExamine == 'true'}]]></conditionExpression>
+    </sequenceFlow>
+    <exclusiveGateway gatewayDirection="Unspecified" id="taskBookSZGateway" name="任务书司长审核网关"/>
+    <sequenceFlow id="flow27" sourceRef="taskBookSiZhang" targetRef="taskBookSZGateway"/>
+    <sequenceFlow id="flow28" name="审核不通过" sourceRef="taskBookSZGateway" targetRef="taskBookChuZhang">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${taskBookSZExamine == 'false'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow29" name="流程结束" sourceRef="taskGateway" targetRef="end">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${taskStatus == 'end'}]]></conditionExpression>
+    </sequenceFlow>
+    <subProcess activiti:exclusive="true" id="subprocess" name="SubProcess" triggeredByEvent="false">
+      <multiInstanceLoopCharacteristics activiti:collection="PersonliableList" activiti:elementVariable="Personliable" isSequential="false"/>
+      <startEvent id="startevent1" name="Start"/>
+      <userTask activiti:assignee="${Personliable}" activiti:exclusive="true" id="Personliable" name="任务拆分负责人"/>
+      <sequenceFlow id="flow30" name="开始拆分" sourceRef="startevent1" targetRef="Personliable"/>
+      <exclusiveGateway gatewayDirection="Unspecified" id="personliableGateway" name="任务拆分网关"/>
+      <sequenceFlow id="flow32" sourceRef="Personliable" targetRef="personliableGateway"/>
+      <userTask activiti:assignee="${SplitPerson}" activiti:exclusive="true" id="SplitPerson" name="任务拆分">
+        <multiInstanceLoopCharacteristics activiti:collection="SplitPersonList" activiti:elementVariable="SplitPerson" isSequential="false">
+          <completionCondition><![CDATA[${nrOfCompletedInstances/nrOfInstances == 1}]]></completionCondition>
+        </multiInstanceLoopCharacteristics>
+      </userTask>
+      <sequenceFlow id="flow33" name="任务拆分" sourceRef="personliableGateway" targetRef="SplitPerson">
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${dutyStatus == 'split'}]]></conditionExpression>
+      </sequenceFlow>
+      <userTask activiti:exclusive="true" id="dutyChuZhang" name="处长审批(任务拆分)"/>
+      <sequenceFlow id="flow34" name="任务拆分审批" sourceRef="personliableGateway" targetRef="dutyChuZhang">
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${dutyStatus == 'examine'}]]></conditionExpression>
+      </sequenceFlow>
+      <sequenceFlow id="flow35" name="拆分审批结果" sourceRef="dutyChuZhang" targetRef="Personliable"/>
+      <sequenceFlow id="flow36" name="任务拆分结果" sourceRef="SplitPerson" targetRef="Personliable"/>
+      <endEvent id="endevent1" name="End"/>
+      <sequenceFlow id="flow37" name="任务拆分上报" sourceRef="personliableGateway" targetRef="endevent1">
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${dutyStatus == 'report'}]]></conditionExpression>
+      </sequenceFlow>
+    </subProcess>
+    <sequenceFlow id="flow31" name="任务书下发" sourceRef="taskGateway" targetRef="subprocess">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${taskStatus == 'handout'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow38" name="任务拆分上报" sourceRef="subprocess" targetRef="TaskIssued"/>
+  </process>
+  <bpmndi:BPMNDiagram documentation="background=#FFFFFF;count=1;horizontalcount=1;orientation=0;width=842.4;height=1195.2;imageableWidth=832.4;imageableHeight=1185.2;imageableX=5.0;imageableY=5.0" id="Diagram-_1" name="New Diagram">
+    <bpmndi:BPMNPlane bpmnElement="TaskBookProcess">
+      <bpmndi:BPMNShape bpmnElement="start" id="Shape-start">
+        <omgdc:Bounds height="32.0" width="32.0" x="273.0" y="21.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="TaskIssued" id="Shape-TaskIssued">
+        <omgdc:Bounds height="55.0" width="105.0" x="238.0" y="91.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="taskGateway" id="Shape-taskGateway" isMarkerVisible="false">
+        <omgdc:Bounds height="32.0" width="32.0" x="270.0" y="177.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="taskBookSiZhang" id="Shape-taskBookSiZhang">
+        <omgdc:Bounds height="55.0" width="105.0" x="238.0" y="545.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="end" id="Shape-end">
+        <omgdc:Bounds height="32.0" width="32.0" x="178.0" y="180.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="taskBookChuZhang" id="Shape-taskBookChuZhang">
+        <omgdc:Bounds height="55.0" width="105.0" x="238.0" y="330.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="taskBookCZGateway" id="Shape-taskBookCZGateway" isMarkerVisible="false">
+        <omgdc:Bounds height="32.0" width="32.0" x="270.0" y="446.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="taskBookSZGateway" id="Shape-taskBookSZGateway" isMarkerVisible="false">
+        <omgdc:Bounds height="32.0" width="32.0" x="270.0" y="650.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="subprocess" id="Shape-subprocess" isExpanded="true">
+        <omgdc:Bounds height="531.0" width="581.0" x="570.0" y="100.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="531.0" width="581.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="Shape-startevent1">
+        <omgdc:Bounds height="32.0" width="32.0" x="620.0" y="160.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="Personliable" id="Shape-Personliable">
+        <omgdc:Bounds height="55.0" width="105.0" x="700.0" y="150.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="personliableGateway" id="Shape-personliableGateway" isMarkerVisible="false">
+        <omgdc:Bounds height="32.0" width="32.0" x="732.0" y="310.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="SplitPerson" id="Shape-SplitPerson">
+        <omgdc:Bounds height="55.0" width="105.0" x="1010.0" y="303.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="dutyChuZhang" id="Shape-dutyChuZhang">
+        <omgdc:Bounds height="61.0" width="111.0" x="697.0" y="480.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="61.0" width="111.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="Shape-endevent1">
+        <omgdc:Bounds height="32.0" width="32.0" x="620.0" y="313.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow28" id="BPMNEdge_flow28" sourceElement="taskBookSZGateway" targetElement="taskBookChuZhang">
+        <omgdi:waypoint x="273.0" y="669.0"/>
+        <omgdi:waypoint x="187.0" y="669.0"/>
+        <omgdi:waypoint x="187.0" y="358.0"/>
+        <omgdi:waypoint x="238.0" y="357.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="60.0" x="191.0" y="492.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow29" id="BPMNEdge_flow29" sourceElement="taskGateway" targetElement="end">
+        <omgdi:waypoint x="270.0" y="193.0"/>
+        <omgdi:waypoint x="210.0" y="196.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="48.0" x="221.0" y="177.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow24" id="BPMNEdge_flow24" sourceElement="taskBookChuZhang" targetElement="taskBookCZGateway">
+        <omgdi:waypoint x="286.0" y="385.0"/>
+        <omgdi:waypoint x="286.0" y="446.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow25" id="BPMNEdge_flow25" sourceElement="taskBookCZGateway" targetElement="TaskIssued">
+        <omgdi:waypoint x="299.0" y="465.0"/>
+        <omgdi:waypoint x="399.0" y="465.0"/>
+        <omgdi:waypoint x="399.0" y="118.0"/>
+        <omgdi:waypoint x="343.0" y="118.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="60.0" x="400.0" y="374.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow26" id="BPMNEdge_flow26" sourceElement="taskBookCZGateway" targetElement="taskBookSiZhang">
+        <omgdi:waypoint x="290.0" y="474.0"/>
+        <omgdi:waypoint x="290.0" y="531.0"/>
+        <omgdi:waypoint x="290.0" y="545.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="48.0" x="294.0" y="499.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow27" id="BPMNEdge_flow27" sourceElement="taskBookSiZhang" targetElement="taskBookSZGateway">
+        <omgdi:waypoint x="286.0" y="600.0"/>
+        <omgdi:waypoint x="286.0" y="650.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1" sourceElement="start" targetElement="TaskIssued">
+        <omgdi:waypoint x="289.0" y="53.0"/>
+        <omgdi:waypoint x="289.0" y="91.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="48.0" x="294.0" y="60.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3" sourceElement="TaskIssued" targetElement="taskGateway">
+        <omgdi:waypoint x="286.0" y="146.0"/>
+        <omgdi:waypoint x="286.0" y="177.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow19" id="BPMNEdge_flow19" sourceElement="taskGateway" targetElement="taskBookChuZhang">
+        <omgdi:waypoint x="286.0" y="209.0"/>
+        <omgdi:waypoint x="286.0" y="330.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="60.0" x="294.0" y="249.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow35" id="BPMNEdge_flow35" sourceElement="dutyChuZhang" targetElement="Personliable">
+        <omgdi:waypoint x="808.0" y="510.0"/>
+        <omgdi:waypoint x="865.0" y="510.0"/>
+        <omgdi:waypoint x="865.0" y="177.0"/>
+        <omgdi:waypoint x="805.0" y="177.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="72.0" x="870.0" y="262.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow36" id="BPMNEdge_flow36" sourceElement="SplitPerson" targetElement="Personliable">
+        <omgdi:waypoint x="1063.0" y="303.0"/>
+        <omgdi:waypoint x="1063.0" y="117.0"/>
+        <omgdi:waypoint x="752.0" y="117.0"/>
+        <omgdi:waypoint x="752.5" y="150.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="72.0" x="907.0" y="113.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow37" id="BPMNEdge_flow37" sourceElement="personliableGateway" targetElement="endevent1">
+        <omgdi:waypoint x="732.0" y="326.0"/>
+        <omgdi:waypoint x="652.0" y="329.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="72.0" x="620.0" y="330.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow16" id="BPMNEdge_flow16" sourceElement="taskBookSZGateway" targetElement="TaskIssued">
+        <omgdi:waypoint x="290.0" y="678.0"/>
+        <omgdi:waypoint x="290.0" y="706.0"/>
+        <omgdi:waypoint x="288.0" y="706.0"/>
+        <omgdi:waypoint x="153.0" y="706.0"/>
+        <omgdi:waypoint x="153.0" y="572.0"/>
+        <omgdi:waypoint x="153.0" y="118.0"/>
+        <omgdi:waypoint x="290.0" y="146.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="84.0" x="60.0" y="490.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow38" id="BPMNEdge_flow38" sourceElement="subprocess" targetElement="TaskIssued">
+        <omgdi:waypoint x="570.0" y="365.5"/>
+        <omgdi:waypoint x="343.0" y="118.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="72.0" x="441.0" y="293.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow31" id="BPMNEdge_flow31" sourceElement="taskGateway" targetElement="subprocess">
+        <omgdi:waypoint x="298.0" y="197.0"/>
+        <omgdi:waypoint x="443.0" y="197.0"/>
+        <omgdi:waypoint x="443.0" y="364.0"/>
+        <omgdi:waypoint x="570.0" y="197.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="60.0" x="449.0" y="280.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow32" id="BPMNEdge_flow32" sourceElement="Personliable" targetElement="personliableGateway">
+        <omgdi:waypoint x="748.0" y="205.0"/>
+        <omgdi:waypoint x="748.0" y="310.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow33" id="BPMNEdge_flow33" sourceElement="personliableGateway" targetElement="SplitPerson">
+        <omgdi:waypoint x="764.0" y="326.0"/>
+        <omgdi:waypoint x="1010.0" y="330.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="48.0" x="900.0" y="332.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow34" id="BPMNEdge_flow34" sourceElement="personliableGateway" targetElement="dutyChuZhang">
+        <omgdi:waypoint x="748.0" y="342.0"/>
+        <omgdi:waypoint x="748.0" y="480.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="72.0" x="740.0" y="430.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow30" id="BPMNEdge_flow30" sourceElement="startevent1" targetElement="Personliable">
+        <omgdi:waypoint x="652.0" y="176.0"/>
+        <omgdi:waypoint x="700.0" y="177.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="48.0" x="650.0" y="191.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

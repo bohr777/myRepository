@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.owinfo.dao.SystemsMapper">
+    <sql id="table">BG_System</sql>
+    <resultMap id="BaseResultMap" type="com.owinfo.entity.Systems">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="founder_id" jdbcType="VARCHAR" property="founderId"/>
+        <result column="founder_name" jdbcType="VARCHAR" property="founderName"/>
+        <result column="founder_fullpath" jdbcType="VARCHAR" property="founderFullpath"/>
+        <result column="final_modifier_id" jdbcType="VARCHAR" property="finalModifierId"/>
+        <result column="final_modifier_name" jdbcType="VARCHAR" property="finalModifierName"/>
+        <result column="final_modifier_fullpath" jdbcType="VARCHAR" property="finalModifierFullpath"/>
+        <result column="final_modify" jdbcType="TIMESTAMP" property="finalModify"/>
+        <result column="organizer_id" jdbcType="VARCHAR" property="organizerId"/>
+        <result column="unit_name" jdbcType="VARCHAR" property="unitName"/>
+        <result column="is_delete" jdbcType="CHAR" property="isDelete"/>
+        <result column="system_name" jdbcType="VARCHAR" property="systemName"/>
+        <result column="unit_id" jdbcType="VARCHAR" property="unitId"/>
+        <result column="unit_fullpath" jdbcType="VARCHAR" property="unitFullpath"/>
+        <result column="taskbook_id" jdbcType="VARCHAR" property="taskbookId"/>
+        <result column="organizer_name" jdbcType="VARCHAR" property="organizerName"/>
+        <result column="organizer_fullpath" jdbcType="VARCHAR" property="organizerFullpath"/>
+    </resultMap>
+    <update id="deleteById1">
+    UPDATE BG_System SET is_delete='1' WHERE id=#{id}
+  </update>
+    <select id="listForAll" resultMap="BaseResultMap">
+    SELECT * FROM BG_System WHERE is_delete='0'
+  </select>
+    <select id="listByTaskBookId" resultMap="BaseResultMap">
+    SELECT * FROM BG_System WHERE is_delete='0' AND taskbook_id=#{taskbookId}
+  </select>
+    <update id="deleteByTaskBookId">
+    UPDATE BG_System SET is_delete='1' WHERE taskbook_id=#{taskbookId}
+  </update>
+    <select id="hasId" resultType="java.lang.String">
+    SELECT id FROM BG_System WHERE id=#{id} AND is_delete='0'
+  </select>
+    <select id="plotCount" resultType="com.owinfo.entity.BasePlot">
+        SELECT s.id,SUM(CASE WHEN d.status='1' THEN 1 ELSE 0 END) status1,SUM(CASE WHEN d.status!='1' THEN 1 ELSE 0 END)
+        status2,CONVERT(varchar(100), t.issue_time, 23) createTime FROM BG_System s
+        LEFT JOIN BG_TaskBook_Details d
+        ON d.is_delete='0' AND s.id=d.system_id
+        INNER JOIN BG_TaskBook t
+        ON t.is_delete='0'
+        AND s.taskbook_id=t.id
+        <if test="from !=''">
+            AND t.issue_time &gt; CONVERT(char,#{from},120)
+        </if>
+        <if test="to !=''">
+            AND t.issue_time &lt; CONVERT(char,#{to},120)
+        </if>
+        <if test="competentDept !=''">
+            AND t.competent_dept LIKE ('%'+(#{competentDept}+'%'))
+        </if>
+        WHERE s.is_delete='0'
+        <if test="organizer !=''">
+            AND s.organizer_id=#{organizer}
+        </if>
+        GROUP BY t.issue_time,s.id
+        ORDER BY t.issue_time ASC
+    </select>
+    <select id="list1" resultType="com.owinfo.entity.BaseList">
+        SELECT
+        <if test="organizer ==''.toString()">
+            t.competent_dept dept
+        </if>
+        <if test="organizer !=''">
+            s.organizer_name organizer
+        </if>
+        ,COUNT(*) systemCount FROM BG_System s
+        INNER JOIN BG_TaskBook t
+        ON t.is_delete='0'
+        AND s.taskbook_id=t.id
+        <if test="from !=''">
+            AND t.issue_time &gt; CONVERT(char,#{from},120)
+        </if>
+        <if test="to !=''">
+            AND t.issue_time &lt; CONVERT(char,#{to},120)
+        </if>
+        <if test="competentDept !=''">
+            AND t.competent_dept LIKE ('%'+(#{competentDept}+'%'))
+        </if>
+        WHERE s.is_delete='0'
+        <if test="organizer !=''">
+            AND s.organizer_id=#{organizer}
+        </if>
+        <if test="organizer ==''.toString()">
+            GROUP BY t.competent_dept
+            ORDER BY t.competent_dept ASC
+        </if>
+        <if test="organizer !=''">
+            GROUP BY s.organizer_name
+            ORDER BY s.organizer_name ASC
+        </if>
+    </select>
+
+</mapper>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.owinfo.dao.CustMapper">
+  <sql id="table">PARAM_CUST</sql>
+<resultMap id="CustResultMap" type="com.owinfo.entity.CustEntity">
+  <id column="GUID" property="guid" jdbcType="NVARCHAR" />
+  <result column="PARENT_GUID" property="parentGuid" jdbcType="NVARCHAR" />
+  <result column="CUST_CODE" property="custCode" jdbcType="NVARCHAR" />
+  <result column="NAME" property="name" jdbcType="NVARCHAR" />
+  <result column="DISPLAY_NAME" property="displayName" jdbcType="NVARCHAR" />
+  <result column="GLOBAL_SORT" property="globalSort" jdbcType="NVARCHAR" />
+  <result column="ALL_PATH_NAME" property="allPathName" jdbcType="NVARCHAR" />
+  <result column="LEVELS" property="levels" jdbcType="INTEGER" />
+  <result column="VIRTUALFLAG" property="virtualflag" jdbcType="NCHAR" />
+  <result column="DEPARTMENTCLASSTYPE" property="departmentclasstype" jdbcType="NCHAR" />
+</resultMap>
+
+  <!--<sql id="condition_sql">
+    <if test="displayName != null and displayName!=''">
+      DISPLAY_NAME like CONCAT(CONCAT('%', #{displayName}),'%') AND
+    </if>
+    1=1
+  </sql>-->
+  <!-- 定义返回列 -->
+  <!--<sql id="Base_Column_List">-->
+    <!--GUID, DISPLAY_NAME, ALL_PATH_NAME-->
+  <!--</sql>-->
+  <select id="selectByInfoGuan" resultMap="CustResultMap">
+    SELECT TOP 10 * FROM PARAM_CUST WHERE DISPLAY_NAME LIKE ('%'+(#{displayName}+'%')) AND LEVELS = 3 AND ALL_PATH_NAME NOT LIKE '%海关总署%'
+  </select>
+  <select id="selectByInfoShu" resultMap="CustResultMap">
+    SELECT TOP 10 * FROM PARAM_CUST WHERE DISPLAY_NAME LIKE ('%'+(#{displayName}+'%')) AND ((LEVELS = 3 AND ALL_PATH_NAME LIKE '%海关总署%') OR (LEVELS = 2 AND ALL_PATH_NAME NOT LIKE '%海关总署%'))
+  </select>
+  <select id="selectByInfo" parameterType="java.lang.String" resultMap="CustResultMap">
+    SELECT TOP 10 * FROM PARAM_CUST WHERE DISPLAY_NAME LIKE ('%'+(#{displayName}+'%'))
+  </select>
+  <select id="getChild" resultMap="CustResultMap">
+    SELECT * FROM PARAM_CUST WHERE ALL_PATH_NAME LIKE (#{parent}+'%') AND ALL_PATH_NAME !=#{parent} AND LEVELS=#{level} ORDER BY GLOBAL_SORT
+  </select>
+  <select id="listByName" resultMap="CustResultMap">
+    SELECT TOP 10 * FROM PARAM_CUST WHERE  DISPLAY_NAME LIKE ('%'+(#{name}+'%')) ORDER BY ALL_PATH_NAME
+  </select>
+</mapper>

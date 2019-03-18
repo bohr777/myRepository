@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="config-sdk-1.0.4">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/owinfo-common-web/lib/config-sdk-1.0.4.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

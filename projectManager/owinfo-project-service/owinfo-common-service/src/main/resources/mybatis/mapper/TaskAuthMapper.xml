@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.owinfo.dao.TaskAuthMapper" >
+  <sql id="table">BG_Task_AUTH</sql>
+  <resultMap id="BaseResultMap" type="com.owinfo.entity.TaskAuth" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="node" property="node" jdbcType="VARCHAR" />
+    <result column="scene" property="scene" jdbcType="NVARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="getByNode" resultMap="BaseResultMap">
+    SELECT * FROM BG_Task_AUTH WHERE node=#{node}
+  </select>
+</mapper>
