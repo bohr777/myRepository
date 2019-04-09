@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="button" value="下载" onclick="a()">
+</body>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script type="text/javascript">
+    function a() {
+        $.ajax({
+            type: "POST",
+//            url: "http://192.168.8.109:8088/sql"
+            url: "localhsot:8088/sql"
+        })
+    }
+</script>
+</html>

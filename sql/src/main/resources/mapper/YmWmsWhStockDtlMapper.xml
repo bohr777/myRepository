@@ -39,7 +39,13 @@
   <select id="selectAll" resultMap="BaseResultMap" >
     select
     <include refid="Base_Column_List" />
-    from ym_wms.ym_wms_wh_stock_dtl
+    from ym_wms_wh_stock_dtl
+  </select>
+
+  <select id="selectAllByPage" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from ym_wms_wh_stock_dtl limit 1,#{page}
   </select>
 
   <!--<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >-->

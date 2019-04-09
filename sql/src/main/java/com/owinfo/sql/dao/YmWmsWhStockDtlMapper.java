@@ -3,6 +3,7 @@ package com.owinfo.sql.dao;
 import com.owinfo.sql.bean.YmWmsWhStockDtl;
 import org.apache.ibatis.annotations.Mapper;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 
@@ -11,6 +12,7 @@ public interface YmWmsWhStockDtlMapper {
 
     List selectAll();
 
+    List selectAllByPage(Integer page);
     int deleteByPrimaryKey(Long rid);
 
     int insert(YmWmsWhStockDtl record);

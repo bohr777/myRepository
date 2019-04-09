@@ -21,4 +21,9 @@ public class YmWmsWhStockDtlServiceImpl implements YmWmsWhStockDtlService {
         return ymWmsWhStockDtlMapper.selectAll();
     }
 
+    @Override
+    public List selectAllByPage(Integer page) {
+        return ymWmsWhStockDtlMapper.selectAllByPage(page);
+    }
+
 }

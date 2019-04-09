@@ -10,4 +10,6 @@ public interface YmWmsWhStockDtlService {
 
     List selectAll();
 
+    List selectAllByPage(Integer page);
+
 }

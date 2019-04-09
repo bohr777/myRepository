@@ -1,43 +1,41 @@
 package com.owinfo.sql.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.owinfo.sql.bean.YmWmsWhStockDtl;
 import com.owinfo.sql.service.YmWmsWhStockDtlService;
 import com.owinfo.sql.util.ExportExcelUtil;
 import com.owinfo.sql.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
-import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static com.owinfo.sql.controller.YmWmsWhStockDtlController.timeToString;
 
 /**
- * author: qiyong
- * 2018/11/12 16:28
+ * @Description
+ * @auther qiyong
+ * @create 2019-04-01 11:24
  */
 @RestController
-public class YmWmsWhStockDtlController {
+public class Test {
 
     @Autowired
     private YmWmsWhStockDtlService ymWmsWhStockDtlService;
 
-
-    /**
-     * SQL数据库导出EXECL
-     *
-     * @param response
-     * @return
-     * @throws Exception
-     */
-    @RequestMapping(value = "/sql")
-    public Result sql(HttpServletResponse response) throws Exception {
+    @RequestMapping("/down")
+    public Result sql(@RequestBody JSONObject jsonObject, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Integer page = jsonObject.getInteger("page");
         Result result = null;
-        List<YmWmsWhStockDtl> ymWmsWhStockDtlList = ymWmsWhStockDtlService.selectAll();
+        List<YmWmsWhStockDtl> ymWmsWhStockDtlList = ymWmsWhStockDtlService.selectAllByPage(page);
         String fileName = "sql_data.xls";
         List<Map<String, Object>> sqlList = new ArrayList<>();
         try {
@@ -72,7 +70,7 @@ public class YmWmsWhStockDtlController {
             }
             OutputStream os = response.getOutputStream();
             response.reset();// 清空输出流
-            response.setHeader("Content-disposition", "attachment; filename=" + URLEncoder.encode(fileName,"UTF-8"));
+            response.setHeader("Content-disposition", "attachment; filename=" + fileName);
             // 设定输出文件头
             response.setContentType("application/msexcel");// 定义输出类型
             String res = ExportExcelUtil.exportExcel3(fileName, column, sqlList, os, "明细", "商品明细表", 10);
@@ -83,17 +81,6 @@ public class YmWmsWhStockDtlController {
             Result.success("失败");
         }
         return result;
-    }
-
-    /**
-     * 日期格式转换成字符串
-     *
-     * @param date
-     * @return String
-     */
-    public static String timeToString(Date date) {
-        SimpleDateFormat format0 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return format0.format(date);
     }
 
 }

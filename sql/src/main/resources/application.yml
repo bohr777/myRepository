@@ -4,6 +4,10 @@ spring:
       driver-class-name: com.mysql.jdbc.Driver
       username: root
       password: root
+  thymeleaf:
+    cache: false
+    prefix: classpath:/public/template/
+    suffix: .html
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
@@ -14,4 +18,8 @@ logging:
     org.springfromework.web: debug
 
 
+server:
+  port: 8088
+
+indexUrl: /index
 
